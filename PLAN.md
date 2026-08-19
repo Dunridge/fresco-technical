@@ -956,4 +956,52 @@ Persistence is not required by the challenge and does not improve initial extrac
 
 ## 15. Current Focus
 
-The current implementation focus should
+The current implementation focus should always be explicitly recorded here so coding agents do not attempt to implement the entire plan at once.
+
+### Current Milestone
+
+**Milestone 1 - Document Exploration**
+
+### Current Objective
+
+Inspect representative PDFs and determine the most reliable way to preserve text and spatial layout.
+
+### Next Steps
+
+* [ ] Select representative PDFs
+* [ ] Identify section/list examples
+* [ ] Identify table examples
+* [ ] Identify difficult examples
+* [ ] Compare PyMuPDF and pdfplumber
+* [ ] Record findings
+* [ ] Choose initial parser
+
+### Do Not Implement Yet
+
+Until the document exploration milestone provides evidence for the architecture, do not prematurely implement:
+
+* Database persistence
+* Async job infrastructure
+* Cloud infrastructure
+* Full frontend
+* Feedback UI
+* Complex LLM orchestration
+
+---
+
+## 16. Plan Maintenance
+
+This document should evolve as implementation progresses.
+
+Update `PLAN.md` when:
+
+* An experiment resolves an open technical question
+* A major architectural decision changes
+* A milestone is completed
+* Evaluation identifies a new systematic failure category
+* A major dependency is introduced or replaced
+* A significant engineering tradeoff is accepted
+
+Do not rewrite historical decisions silently.
+
+When a decision changes, preserve the previous decision in the Decision Log and record why it was superseded.
