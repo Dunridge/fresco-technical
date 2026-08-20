@@ -156,6 +156,7 @@ function Cell({ field, value, confidence, edited, onChange }: CellProps) {
     <td className={`cell cell--${tone} ${edited ? "cell--edited" : ""}`}>
       <input
         aria-label={FIELD_LABELS[field]}
+        title={value === null ? undefined : String(value)}
         value={value === null ? "" : String(value)}
         placeholder="null"
         inputMode={field === "qty" ? "numeric" : "text"}
