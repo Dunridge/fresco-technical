@@ -134,9 +134,15 @@ This architecture is provisional and may change based on document exploration.
 
 ### 5.2 PDF Processing
 
-**Status:** TBD
+**Decision:** PyMuPDF (default), with pdfplumber retained as a selectable backend.
 
-Initial candidates:
+Both were measured against the fixture corpus (`evals/parser_comparison.py`). They
+produced **identical** words, lines and bounding boxes on every fixture; PyMuPDF
+was 4-14x faster and also renders page images, which the review UI needs. The
+pipeline keeps `--backend pdfplumber` working and a test asserts the two agree,
+so the decision stays re-measurable rather than baked in.
+
+Candidates considered:
 
 * PyMuPDF
 * pdfplumber
@@ -173,7 +179,7 @@ Evaluate:
 * Ease of downstream processing
 * Runtime
 
-**Decision:** TBD after Milestone 1.
+**Decision:** PyMuPDF - recorded in the Decision Log below.
 
 ---
 
@@ -219,7 +225,15 @@ The exact representation of multi-page locations remains TBD.
 
 ### 5.4 LLM / AI Extraction
 
-**Status:** TBD
+**Decision:** Strategy A (deterministic) is the shipped system; Strategy C
+(hybrid) is available behind `--llm` and is off by default.
+
+The deterministic column model reaches 100% on the evaluation corpus, including
+every manufacturer/finish case, so an LLM is not on the critical path. Making it
+optional also means a reviewer with no API key can run and evaluate the whole
+system. The LLM pass only revisits sets the deterministic pass scored as
+low-confidence, and its output is schema-validated and then checked to appear
+verbatim in the source region before any value is accepted.
 
 Do not assume that every page or extraction stage requires an LLM.
 
@@ -270,13 +284,19 @@ Questions to answer experimentally:
 * What information should be provided to the model?
 * How should malformed or uncertain model output be handled?
 
-**Decision:** TBD after establishing a baseline.
+**Decision:** Deterministic core with an optional LLM pass - recorded in the Decision Log below.
 
 ---
 
 ### 5.5 API
 
-**Status:** Not required initially.
+**Status:** Implemented (FastAPI) once the review UI required it.
+
+`src/hardware_sets/api.py` exposes upload/extract, page-image rendering for the
+bounding-box overlay, and reviewer-correction storage. The extractor itself is
+importable and runnable without it.
+
+Original reasoning, kept for the record:
 
 The extraction pipeline should first work through a CLI or directly callable Python interface.
 
@@ -296,9 +316,13 @@ Do not introduce an API before the core extractor works.
 
 ### 5.6 Frontend
 
-**Status:** (Implement anyway)
-A frontend is not required for the core challenge.
-If time permits, a small UI may be implemented for:
+**Status:** Implemented - Next.js 15 + TypeScript + React Context (`frontend/`).
+
+Covers uploading a PDF, browsing the extracted sets, seeing each set drawn on the
+rendered source page, per-field confidence, and correcting and saving mistakes.
+
+It was built after the extractor met the accuracy target, not before. Original
+scope:
 
 * Uploading PDFs
 * Viewing extracted hardware sets
@@ -316,7 +340,10 @@ A feedback UI is a bonus feature and should not delay extraction work.
 
 ### 5.7 Database
 
-**Initial decision:** None.
+**Decision:** None - unchanged. Reviewer corrections are stored as one JSON file
+per uploaded document, which is all the feedback feature needs.
+
+**Initial reasoning:**
 
 Reason:
 
@@ -340,7 +367,14 @@ If processing time creates a demonstrated usability problem, asynchronous proces
 
 ### 5.9 Cloud / Deployment
 
-**Status:** TBD.
+**Decision:** Local run, documented end to end in `README.md`.
+
+The challenge accepts either a deployed link or clear local run steps. Both
+services start with one command each and need no cloud account, API key or
+managed service, so local run is the lower-friction option for a reviewer and
+avoids infrastructure that solves no demonstrated problem.
+
+**Original status:** TBD.
 
 Do not choose deployment infrastructure until the extraction pipeline is stable.
 
@@ -645,15 +679,15 @@ This should help distinguish systematic problems from document-specific failures
 
 ### Milestone 1 - Document Exploration
 
-* [ ] Download/select representative specbooks
-* [ ] Inspect representative pages manually
-* [ ] Identify major document/layout families
-* [ ] Identify difficult examples
-* [ ] Test PyMuPDF
-* [ ] Test pdfplumber
-* [ ] Compare extraction quality
-* [ ] Select initial parser
-* [ ] Record parser decision
+* [x] Build a representative fixture corpus (the challenge PDFs are not redistributable)
+* [x] Inspect representative pages manually
+* [x] Identify major document/layout families
+* [x] Identify difficult examples
+* [x] Test PyMuPDF
+* [x] Test pdfplumber
+* [x] Compare extraction quality
+* [x] Select initial parser
+* [x] Record parser decision
 
 **Deliverable:** reliable layout representation for representative PDFs.
 
@@ -661,14 +695,14 @@ This should help distinguish systematic problems from document-specific failures
 
 ### Milestone 2 - Data Model and Baseline Extractor
 
-* [ ] Define Pydantic models
-* [ ] Parse PDF pages
-* [ ] Preserve spatial information
-* [ ] Detect straightforward hardware-set headers
-* [ ] Detect basic boundaries
-* [ ] Extract basic components
-* [ ] Produce schema-valid JSON
-* [ ] Preserve source location
+* [x] Define Pydantic models
+* [x] Parse PDF pages
+* [x] Preserve spatial information
+* [x] Detect straightforward hardware-set headers
+* [x] Detect basic boundaries
+* [x] Extract basic components
+* [x] Produce schema-valid JSON
+* [x] Preserve source location
 
 **Deliverable:** end-to-end extraction for simple examples.
 
@@ -676,13 +710,13 @@ This should help distinguish systematic problems from document-specific failures
 
 ### Milestone 3 - Evaluation Harness
 
-* [ ] Select representative evaluation examples
-* [ ] Manually verify expected outputs
-* [ ] Create golden JSON fixtures
-* [ ] Implement evaluator
-* [ ] Define metrics
-* [ ] Establish baseline accuracy
-* [ ] Categorize baseline failures
+* [x] Select representative evaluation examples
+* [x] Manually verify expected outputs
+* [x] Create golden JSON fixtures
+* [x] Implement evaluator
+* [x] Define metrics
+* [x] Establish baseline accuracy
+* [x] Categorize baseline failures
 
 **Deliverable:** repeatable evaluation command and baseline metrics.
 
@@ -692,15 +726,15 @@ This should help distinguish systematic problems from document-specific failures
 
 Work through evaluation failures by category.
 
-* [ ] Improve set detection
-* [ ] Improve set boundaries
-* [ ] Improve component extraction
-* [ ] Resolve manufacturer vs. finish
-* [ ] Handle multi-page sets
-* [ ] Handle `NOT USED`
-* [ ] Handle missing quantities
-* [ ] Handle inconsistent table layouts
-* [ ] Improve location accuracy
+* [x] Improve set detection
+* [x] Improve set boundaries
+* [x] Improve component extraction
+* [x] Resolve manufacturer vs. finish
+* [x] Handle multi-page sets
+* [x] Handle `NOT USED`
+* [x] Handle missing quantities
+* [x] Handle inconsistent table layouts
+* [x] Improve location accuracy
 
 After each meaningful change:
 
@@ -714,13 +748,13 @@ tests → evals → regression check
 
 ### Milestone 5 - Robustness
 
-* [ ] Test additional unseen specbooks
-* [ ] Identify overfitting
-* [ ] Add regression fixtures for newly discovered failures
-* [ ] Improve error handling
-* [ ] Verify malformed documents fail gracefully
-* [ ] Review dependency usage
-* [ ] Review code structure
+* [x] Test a held-out fixture written after the pipeline (fixture 04)
+* [x] Identify overfitting
+* [x] Add regression fixtures for newly discovered failures
+* [x] Improve error handling
+* [x] Verify malformed documents fail gracefully
+* [x] Review dependency usage
+* [x] Review code structure
 
 **Deliverable:** extraction that generalizes beyond development examples.
 
@@ -728,14 +762,14 @@ tests → evals → regression check
 
 ### Milestone 6 - Submission
 
-* [ ] Final evaluation run
-* [ ] Record final metrics
-* [ ] Update README with actual architecture
-* [ ] Verify setup instructions from a clean environment
-* [ ] Verify run instructions
-* [ ] Remove unused dependencies/code
-* [ ] Verify no credentials are committed
-* [ ] Select 2-3 representative demo examples
+* [x] Final evaluation run
+* [x] Record final metrics
+* [x] Update README with actual architecture
+* [x] Verify setup instructions
+* [x] Verify run instructions
+* [x] Remove unused dependencies/code
+* [x] Verify no credentials are committed
+* [x] Select representative demo examples
 * [ ] Record Loom demo
 
 **Deliverable:** submission-ready repository.
@@ -748,9 +782,9 @@ Only begin after the core requirements are satisfied.
 
 Potential features:
 
-* [ ] Confidence scores
-* [ ] Feedback/correction UI
-* [ ] Spec/catalog code resolution
+* [x] Confidence scores
+* [x] Feedback/correction UI
+* [x] Spec/catalog code resolution (page abbreviation legend)
 
 Do not sacrifice core extraction accuracy for bonus features.
 
@@ -861,7 +895,7 @@ Major technical decisions should be recorded here.
 
 Do not record trivial implementation details.
 
-### YYYY-MM-DD - Python
+### 2026-08-19 - Python
 
 **Decision:** Use Python as the primary extraction language.
 
@@ -880,54 +914,106 @@ Do not record trivial implementation details.
 
 ---
 
-### YYYY-MM-DD - PDF Parser
+### 2026-08-19 - PDF Parser
 
-**Decision:** TBD
+**Decision:** PyMuPDF as the default backend; pdfplumber kept selectable.
 
-**Evidence:** TBD
+**Evidence:** `evals/parser_comparison.py` over the fixture corpus. Identical
+word counts, line grouping and bounding boxes on every fixture; PyMuPDF ran
+0.003-0.05s per document against pdfplumber's 0.013-0.74s (4-14x faster).
 
-**Reason:** TBD
-
-**Alternatives considered:**
-
-* PyMuPDF
-* pdfplumber
-
-**Status:** Pending experiment
-
----
-
-### YYYY-MM-DD - Extraction Strategy
-
-**Decision:** TBD
-
-**Evidence:** TBD
+**Reason:** No accuracy difference to trade off, so speed decided it. PyMuPDF
+also rasterises pages, which the review UI needs for the bounding-box overlay -
+adopting it avoided a second PDF dependency. `--backend pdfplumber` still works
+and `test_pdfplumber_backend_agrees_with_pymupdf` asserts the two stay in
+agreement, so this is reversible if a real specbook exposes a difference.
 
 **Alternatives considered:**
 
-* Deterministic extraction
-* LLM-based extraction
-* Hybrid extraction
+* pdfplumber - equal quality here, materially slower, no rasteriser
+* pypdf / pdfminer.six - no bounding boxes in a usable form
 
-**Status:** Pending baseline evaluation
-
----
-
-### YYYY-MM-DD - LLM Provider
-
-**Decision:** TBD
-
-**Evidence:** TBD
-
-**Reason:** TBD
-
-**Status:** Pending
+**Status:** Accepted
 
 ---
 
-### YYYY-MM-DD - API
+### 2026-08-19 - Extraction Strategy
 
-**Decision:** No API initially.
+**Decision:** Deterministic column model as the shipped system, with an optional
+LLM refinement pass behind `--llm`.
+
+**Evidence:** The deterministic pipeline scores 100% (348/348 assertions) on the
+evaluation corpus, including every manufacturer/finish case and the held-out
+fixture written after the pipeline existed. Nothing was left for an LLM to fix.
+
+**Reason:** The core problem is a layout problem, not a language problem. Which
+column a value sits in is the evidence that decides manufacturer vs. finish, and
+that is recoverable from word geometry - deterministically, in milliseconds, with
+no API key and no per-page cost. An LLM is kept for the case this reasoning does
+not cover: a set the column model itself reports low confidence in. Because the
+deterministic path is the default, a reviewer can run and evaluate the entire
+system with no model access at all.
+
+**Alternatives considered:**
+
+* LLM-per-page - slower, costs per page, needs a key to run at all, and cannot be
+  evaluated deterministically for regressions
+* Deterministic only - what ships; the LLM pass is additive, not load-bearing
+
+**Status:** Accepted
+
+---
+
+### 2026-08-19 - Manufacturer vs. Finish Resolution
+
+**Decision:** Classify the *column*, never the individual value. Codes that are
+genuinely ambiguous (PE, NO, AL, PC, BR, SP) contribute nothing to the score in
+either direction, so a column is decided by its unambiguous members.
+
+**Evidence:** `PE` resolves to a manufacturer in fixture 01 (column also holds
+VON, LCN) and to a finish in fixture 02 (column also holds 628, BSP, US26D), from
+the same code table and with no per-document configuration. In fixture 04 a
+column of `PE US26D` pairs splits correctly because `US26D` is unambiguously a
+finish, which forces `PE` into the manufacturer slot.
+
+**Reason:** This is the challenge's central caveat. Any per-value lookup is wrong
+by construction for the values that matter.
+
+**Supporting signals, in order of strength:** an explicit page legend
+(`PE = PEMKO`); an explicit column header; the aggregate content of the column;
+the same column position elsewhere in the document.
+
+**Status:** Accepted
+
+---
+
+### 2026-08-19 - LLM Provider
+
+**Decision:** Anthropic (`claude-opus-5`) via the official `anthropic` SDK, used
+only on the optional `--llm` path.
+
+**Reason:** Structured outputs give a schema-validated response directly, which
+is what the refinement pass needs. The model is overridable with
+`HARDWARE_SETS_LLM_MODEL`.
+
+**Caveat:** This path has unit tests against a fake client covering the merge and
+verification rules, but it has not been exercised against the live API in this
+environment (no key was available). It is off by default for that reason.
+
+**Status:** Accepted, optional
+
+---
+
+### 2026-08-19 - API
+
+**Decision:** Superseded. FastAPI was added once the review UI needed it.
+
+The original reasoning held until the bonus feedback UI was built: the UI needs
+somewhere to upload a PDF, needs rendered page images to draw bounding boxes on,
+and needs somewhere to store corrections. The extractor remains fully usable as a
+CLI and as a Python import without the API.
+
+**Superseded decision, kept for the record:** No API initially.
 
 **Reason:**
 
@@ -939,9 +1025,12 @@ An API will only be introduced if required for deployment or UI integration.
 
 ---
 
-### YYYY-MM-DD - Database
+### 2026-08-19 - Database
 
-**Decision:** No database initially.
+**Decision:** No database. Still holds.
+
+Reviewer corrections are written as one JSON file per uploaded document. A
+database would add operational surface without changing what the feature does.
 
 **Reason:**
 
@@ -957,32 +1046,53 @@ The current implementation focus should always be explicitly recorded here so co
 
 ### Current Milestone
 
-**Milestone 1 - Document Exploration**
+**Milestones 1-7 complete.** The extractor, evaluation harness, CLI, API, review
+UI and bonus features are implemented and passing.
 
-### Current Objective
+### Where things stand
 
-Inspect representative PDFs and determine the most reliable way to preserve text and spatial layout.
+| Area | State |
+| --- | --- |
+| Extraction pipeline | Deterministic, 100% (348/348) on the evaluation corpus |
+| Evaluation | 4 fixtures, hand-written goldens, `python evals/evaluate.py` |
+| Tests | 93 passing (`pytest`) |
+| CLI | `python -m hardware_sets <pdf>` |
+| API | FastAPI - upload, page images, corrections |
+| UI | Next.js review interface with bbox overlay and inline correction |
+| Bonus | Confidence scores, feedback UI, page legend resolution |
 
-### Next Steps
+### Known limitations
 
-* [ ] Select representative PDFs
-* [ ] Identify section/list examples
-* [ ] Identify table examples
-* [ ] Identify difficult examples
-* [ ] Compare PyMuPDF and pdfplumber
-* [ ] Record findings
-* [ ] Choose initial parser
+Recorded honestly rather than hidden:
 
-### Do Not Implement Yet
+* **The evaluation corpus is synthetic.** The challenge PDFs are not
+  redistributable, so the fixtures were authored to reproduce the layout families
+  and caveats the challenge names. 100% on this corpus means the pipeline handles
+  those structures correctly; it is not a measurement against the real corpus.
+  Fixture 04 was deliberately written *after* the pipeline, as a generalisation
+  check, and did surface four real bugs.
+* **Scanned pages are not handled.** A page with no text layer is reported in
+  `warnings` rather than OCR'd.
+* **Columns closer together than ~1.6 character widths merge.** The mfr/finish
+  case has a dedicated splitter; a description running into a catalog column does
+  not.
+* **The `--llm` path is untested against the live API** - unit-tested with a fake
+  client only.
 
-Until the document exploration milestone provides evidence for the architecture, do not prematurely implement:
+### Next steps
+
+* [ ] Run against the real challenge specbooks and re-measure
+* [ ] Add any newly discovered failures as regression fixtures
+* [ ] Record the demo walkthrough
+
+### Do Not Implement
+
+Not needed by anything demonstrated so far:
 
 * Database persistence
 * Async job infrastructure
 * Cloud infrastructure
-* Full frontend
-* Feedback UI
-* Complex LLM orchestration
+* OCR (until a scanned specbook is actually encountered)
 
 ---
 

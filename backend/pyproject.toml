@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hardware-sets"
+version = "1.0.0"
+description = "Extract structured hardware sets from Division 08 construction specification PDFs"
+requires-python = ">=3.11"
+dependencies = [
+    "pymupdf>=1.24",
+    "pdfplumber>=0.11",
+    "pydantic>=2.6",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40"]
+dev = ["pytest>=8.0", "httpx>=0.27"]  # httpx backs fastapi.testclient
+
+[project.scripts]
+hardware-sets = "hardware_sets.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+filterwarnings = ["ignore::DeprecationWarning"]

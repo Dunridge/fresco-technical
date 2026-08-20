@@ -1,0 +1,48 @@
+{
+  "source": "fixture_02_list_sections.pdf",
+  "notes": "Section/list format with no column header row and MFR printed left of FINISH. PE appears in the finish column here (Painted Enamel) and NO appears in the manufacturer column (Norton) - the same two codes carry the opposite meaning in fixture_01.",
+  "hardware_sets": [
+    {
+      "set_number": "1",
+      "description": "EXTERIOR ENTRANCE DOORS",
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 3, "description": "HINGE", "catalog_number": "BB1279 4-1/2 X 4-1/2 NRP", "mfr": "HAG", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "MORTISE LOCK", "catalog_number": "8904 LNL", "mfr": "SAR", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "SURFACE CLOSER", "catalog_number": "1601 SHCUSH", "mfr": "NO", "finish": "689", "notes": null},
+        {"qty": 1, "description": "WALL BUMPER", "catalog_number": "406", "mfr": "IVE", "finish": "US26D", "notes": null}
+      ]
+    },
+    {
+      "set_number": "2A",
+      "description": "PAINTED HOLLOW METAL DOORS",
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 2, "description": "HINGE", "catalog_number": "BB1279 4-1/2 X 4-1/2", "mfr": "HAG", "finish": "PE", "notes": null},
+        {"qty": 1, "description": "PRIVACY SET", "catalog_number": "5402LN", "mfr": "YAL", "finish": "628", "notes": null},
+        {"qty": 1, "description": "OVERHEAD HOLDER", "catalog_number": "90S", "mfr": "GLY", "finish": "BSP", "notes": null},
+        {"qty": 1, "description": "FLOOR STOP", "catalog_number": "441CU", "mfr": "ROC", "finish": "PE", "notes": null}
+      ]
+    },
+    {
+      "set_number": "3",
+      "description": "NOT USED",
+      "not_used": true,
+      "pages": [1],
+      "components": []
+    },
+    {
+      "set_number": "4",
+      "description": "STOREFRONT DOORS",
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 1, "description": "CYLINDER, SEE DIVISION 28 FOR ACCESS CONTROL WIRING", "catalog_number": "20-022 ICX", "mfr": "SCH", "finish": "626", "notes": null},
+        {"qty": null, "description": "THRESHOLD", "catalog_number": "2005AV", "mfr": "NGP", "finish": "AL", "notes": null},
+        {"qty": 1, "description": "PERIMETER GASKETING", "catalog_number": "5050B", "mfr": "NGP", "finish": "BK", "notes": null}
+      ]
+    }
+  ]
+}
