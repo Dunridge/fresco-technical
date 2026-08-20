@@ -31,6 +31,11 @@
   --red-600: #dc2626;
 
   --header-h: 58px;
+  /* Space below the content column. The sticky sidebar subtracts this from its
+     own height so it still clears the app bar once the page is fully scrolled -
+     its containing block ends here, not at the bottom of the window. */
+  --page-bottom: 28px;
+  --sticky-gap: 20px;
   --radius: 8px;
   --radius-lg: 14px;
   --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.06);
@@ -50,7 +55,7 @@ body {
 
 /* Content stays centred in a fixed column; only the app bar spans the window,
    so the logo hugs the edge the way it does on fresco.build. */
-main { max-width: 1400px; margin: 0 auto; padding: 24px 24px 72px; }
+main { max-width: 1400px; margin: 0 auto; padding: 24px 24px var(--page-bottom); }
 
 /* Sticky app bar, mirroring the Fresco product shell. */
 .appbar {
@@ -181,9 +186,10 @@ input:focus { outline: 2px solid var(--blue-500); outline-offset: -1px; backgrou
 .setlist {
   padding: 18px;
   position: sticky;
-  top: calc(var(--header-h) + 20px);
-  /* Never taller than the space below the app bar, so the panel stays reachable. */
-  max-height: calc(100vh - var(--header-h) - 40px);
+  top: calc(var(--header-h) + var(--sticky-gap));
+  /* Fits the space between the app bar and the end of the content column, so it
+     is never clipped - at any scroll position, including the very bottom. */
+  max-height: calc(100vh - var(--header-h) - var(--sticky-gap) - var(--page-bottom));
   display: flex;
   flex-direction: column;
 }
