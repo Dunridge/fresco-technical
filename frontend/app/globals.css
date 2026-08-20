@@ -143,6 +143,10 @@ input:focus { outline: 2px solid var(--blue-500); outline-offset: -1px; backgrou
   align-items: start;
 }
 .workspace__main { display: grid; gap: 20px; min-width: 0; }
+/* `align-items: start` above shrinks each column to its own content, which
+   leaves a sticky child no room to travel. The sidebar column stretches to the
+   row height so its panel can actually stick while the page scrolls. */
+.workspace > aside { align-self: stretch; min-height: 0; }
 
 .setlist, .components, .viewer {
   background: var(--surface);
@@ -151,16 +155,27 @@ input:focus { outline: 2px solid var(--blue-500); outline-offset: -1px; backgrou
   box-shadow: var(--shadow);
   min-width: 0;
 }
-.setlist { padding: 18px; position: sticky; top: 20px; }
+.setlist {
+  padding: 18px;
+  position: sticky;
+  top: 20px;
+  /* Never taller than the viewport, so the whole panel stays reachable. */
+  max-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+}
 .components, .viewer { padding: 20px 22px; }
 
 .setlist ul {
   list-style: none;
   margin: 12px 0 0;
-  padding: 0;
+  padding: 0 4px 0 0;
   display: grid;
   gap: 6px;
-  max-height: 68vh;
+  align-content: start;
+  /* Takes the leftover height inside the sticky panel and scrolls on its own. */
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 .setlist__item {
