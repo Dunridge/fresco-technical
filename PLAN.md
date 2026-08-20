@@ -296,10 +296,8 @@ Do not introduce an API before the core extractor works.
 
 ### 5.6 Frontend
 
-**Status:** Optional.
-
+**Status:** (Implement anyway)
 A frontend is not required for the core challenge.
-
 If time permits, a small UI may be implemented for:
 
 * Uploading PDFs
@@ -308,7 +306,6 @@ If time permits, a small UI may be implemented for:
 * Correcting extraction errors
 
 Possible stack:
-
 * Next.js
 * TypeScript
 * React Context API
