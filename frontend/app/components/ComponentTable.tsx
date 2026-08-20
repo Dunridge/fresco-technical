@@ -7,8 +7,17 @@ import { COMPONENT_FIELDS, FIELD_LABELS, type ComponentField } from "@/lib/types
 import { confidenceTone } from "./confidence";
 
 export function ComponentTable() {
-  const { selectedSet, editedFields, updateComponent, revertSet, save, saveState, hasEdits, result } =
-    useExtraction();
+  const {
+    selectedSet,
+    editedFields,
+    updateComponent,
+    revertSet,
+    save,
+    saveState,
+    hasEdits,
+    reviewProgress,
+    result,
+  } = useExtraction();
   const [note, setNote] = useState("");
 
   if (!selectedSet) {
@@ -18,6 +27,11 @@ export function ComponentTable() {
   const setEdited = [...editedFields].some((key) =>
     key.startsWith(`${selectedSet.set_number}:`),
   );
+
+  // "Nothing needed correcting" is a real outcome, so saving must not require
+  // an edit - otherwise a clean review can never be recorded at all.
+  const canSave = hasEdits || reviewProgress.reviewed > 0;
+  const saveLabel = hasEdits ? "Save corrections" : "Save review";
 
   return (
     <section className="components">
@@ -35,13 +49,18 @@ export function ComponentTable() {
           <button
             type="button"
             onClick={() => void save(note || undefined)}
-            disabled={!hasEdits || saveState === "saving"}
+            disabled={!canSave || saveState === "saving"}
+            title={
+              hasEdits
+                ? undefined
+                : "Records which sets you checked, even though nothing needed changing."
+            }
           >
             {saveState === "saving"
               ? "Saving…"
               : saveState === "saved"
                 ? "Saved"
-                : "Save corrections"}
+                : saveLabel}
           </button>
         </div>
       </header>
@@ -86,14 +105,22 @@ export function ComponentTable() {
         </div>
       )}
 
-      {hasEdits && (
+      {canSave && (
         <div className="components__note">
-          <label htmlFor="feedback-note">Note for this correction (optional)</label>
+          <label htmlFor="feedback-note">
+            {hasEdits
+              ? "Note for this correction (optional)"
+              : "Note on what you checked (recommended)"}
+          </label>
           <input
             id="feedback-note"
             type="text"
             value={note}
-            placeholder="e.g. the finish column was read as manufacturer on page 3"
+            placeholder={
+              hasEdits
+                ? "e.g. the finish column was read as manufacturer on page 3"
+                : "e.g. checked all 37 sets against the page; no discrepancies found"
+            }
             onChange={(event) => setNote(event.target.value)}
           />
         </div>
