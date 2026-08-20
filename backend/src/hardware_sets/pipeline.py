@@ -14,6 +14,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .classification.columns import Column
+from .detection.column_sets import ColumnSetRegion, find_column_set_regions
 from .detection.sets import SetRegion, build_line_stream, extract_legend, find_set_regions
 from .extraction.components import RegionExtraction, extract_region
 from .models import ExtractionResult, Field_, HardwareSet, Location, PageInfo, Span
@@ -55,15 +56,26 @@ def _extract_from_document(document: Document) -> ExtractionResult:
     frames = detect_frame_lines(document)
     stream = build_line_stream(document, skip=frames)
     legend = extract_legend(stream)
-    regions = find_set_regions(stream)
+    regions: list[SetRegion | ColumnSetRegion] = list(find_set_regions(stream))
+
+    if not regions:
+        # A second layout family prints one continuous table whose leftmost
+        # column carries the set identifier, with no header lines at all.
+        regions = list(find_column_set_regions(stream))
+        if regions:
+            warnings.append(
+                f"No set headers found; read {len(regions)} sets from a table with a "
+                "SET column instead."
+            )
 
     if not regions:
         warnings.append("No hardware-set headers were found in this document.")
 
-    first_pass = [extract_region(r.lines, legend=legend) for r in regions]
+    first_pass = [extract_region(**_region_args(r), legend=legend) for r in regions]
     hints = _document_column_hints(first_pass)
     extractions = [
-        extract_region(r.lines, legend=legend, document_hints=hints) for r in regions
+        extract_region(**_region_args(r), legend=legend, document_hints=hints)
+        for r in regions
     ]
 
     hardware_sets = [
@@ -81,6 +93,22 @@ def _extract_from_document(document: Document) -> ExtractionResult:
     )
 
 
+def _region_args(region: SetRegion | ColumnSetRegion) -> dict:
+    """A set-column region's rows carry no header of their own.
+
+    The table's single header row sits above every set in the table, and the set
+    identifier itself is not a component field, so both are passed explicitly
+    rather than inferred from the rows.
+    """
+    if isinstance(region, ColumnSetRegion):
+        return {
+            "lines": region.lines,
+            "header_line": region.header_line,
+            "geometry_lines": region.table_lines,
+        }
+    return {"lines": region.lines}
+
+
 def _document_column_hints(extractions: list[RegionExtraction]) -> dict[int, Field_]:
     """Learn `column x position -> field` from the sets that classified cleanly."""
     votes: dict[int, dict[Field_, float]] = {}
@@ -94,7 +122,12 @@ def _document_column_hints(extractions: list[RegionExtraction]) -> dict[int, Fie
     return {key: max(fields, key=fields.get) for key, fields in votes.items() if fields}
 
 
-def _build_hardware_set(region: SetRegion, extraction: RegionExtraction) -> HardwareSet:
+def _build_hardware_set(
+    region: SetRegion | ColumnSetRegion, extraction: RegionExtraction
+) -> HardwareSet:
+    if isinstance(region, ColumnSetRegion):
+        return _build_column_hardware_set(region, extraction)
+
     description = region.header.inline_description
     if description is None and extraction.description_lines:
         description = " ".join(line.text.strip() for line in extraction.description_lines).strip()
@@ -126,6 +159,48 @@ def _build_hardware_set(region: SetRegion, extraction: RegionExtraction) -> Hard
         confidence=_set_confidence(extraction),
         column_mapping=_column_mapping(extraction.columns),
     )
+
+
+def _build_column_hardware_set(
+    region: ColumnSetRegion, extraction: RegionExtraction
+) -> HardwareSet:
+    """A set-column set owns exactly its own rows; the table header is shared."""
+    _strip_set_id_from_description(region, extraction)
+    spans = _spans_for_lines(region.lines)
+    primary = spans[0] if spans else Span(page=region.header_line.page, bbox=region.header_line.bbox)
+    return HardwareSet(
+        set_number=region.set_number,
+        description=None,
+        location=Location(
+            page=primary.page,
+            bbox=primary.bbox,
+            line_range=primary.line_range,
+            spans=spans,
+        ),
+        components=extraction.components,
+        not_used=extraction.not_used,
+        confidence=_set_confidence(extraction),
+        column_mapping=_column_mapping(extraction.columns),
+    )
+
+
+def _strip_set_id_from_description(
+    region: ColumnSetRegion, extraction: RegionExtraction
+) -> None:
+    """Remove the set identifier from the row that carries it.
+
+    In these schedules the set column often shares its x-range with the
+    component description, so the identifier lands at the front of the first
+    component's description rather than in a column of its own.
+    """
+    if not extraction.components:
+        return
+    first = extraction.components[0]
+    if not first.description:
+        return
+    head, _, rest = first.description.partition(" ")
+    if head.rstrip(".:").upper() == region.set_number.upper() and rest.strip():
+        first.description = rest.strip()
 
 
 def _lines_of(region: SetRegion, span: Span) -> list[Line]:

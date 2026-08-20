@@ -12,12 +12,20 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
-from ..detection.sets import match_set_header
+from ..detection.sets import is_column_header_line, match_set_header
 from .layout import Document, Line
 
 EDGE_FRACTION = 0.15
 Y_TOLERANCE_FRACTION = 0.02
 MIN_PAGES = 2
+
+
+def _looks_like_set_column_header(line: Line) -> int | None:
+    # Imported lazily: column_sets imports from detection.sets, and importing it
+    # at module scope would tangle the parsing/detection import order.
+    from ..detection.column_sets import _looks_like_set_column_header as check
+
+    return check(line)
 
 
 def _normalize(text: str) -> str:
@@ -41,6 +49,13 @@ def detect_frame_lines(document: Document) -> set[tuple[int, int]]:
             if not _in_edge_zone(line, page.height):
                 continue
             if match_set_header(line) is not None:
+                continue
+            # A column header repeated on every page of a long schedule is
+            # structural content, not page furniture. Stripping it removed the
+            # only evidence that a table has a `SET` column.
+            if is_column_header_line(line):
+                continue
+            if _looks_like_set_column_header(line) is not None:
                 continue
             buckets[_normalize(line.text)].append((page.number, line.index, line.y0))
 

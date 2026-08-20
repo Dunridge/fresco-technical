@@ -38,6 +38,16 @@ def line(text: str, x0: float = 72.0) -> Line:
         # Two-word prefix.
         ("DOOR HARDWARE SET 7", "7", None),
         ("SET 1.1", "1.1", None),
+        # Compound kind word and letter-first identifiers, from a real specbook:
+        # `Hardware Group/Set #A1 - Entry Unit Doors`.
+        ("HARDWARE GROUP/SET #A1", "A1", None),
+        ("HARDWARE GROUP/SET #B2", "B2", None),
+        ("HARDWARE SET/GROUP 12", "12", None),
+        ("HARDWARE SET A1", "A1", None),
+        # One specbook numbers sets as PART n; the PROVIDE guard separates these
+        # from the PART 1/2/3 spec headings that end a region.
+        ("PART 163 - PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:", "163",
+         "PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:"),
     ],
 )
 def test_header_variants(text, number, description):
@@ -92,3 +102,30 @@ def test_column_header_line_detection():
 def test_legend_extraction_splits_multiple_pairs_on_one_line():
     legend = extract_legend([line("MK = MCKINNEY SCH = SCHLAGE PE = PEMKO")])
     assert legend == {"MK": "MCKINNEY", "SCH": "SCHLAGE", "PE": "PEMKO"}
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["END OF SECTION", "SECTION 087100", "SECTION 23 05 00", "PART 2 - PRODUCTS", "PART 1 - GENERAL"],
+)
+def test_region_terminators(text):
+    from hardware_sets.detection.sets import is_region_end
+
+    assert is_region_end(line(text))
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        # One specbook numbers its sets `PART 163 - PROVIDE EACH ...`; an
+        # unbounded `PART \d+` terminator truncated those sets to nothing.
+        "PART 163 - PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:",
+        "PART 12 - PROVIDE EACH DOOR WITH THE FOLLOWING:",
+        "1 EA CYLINDER, SEE DIVISION 28 FOR ACCESS CONTROL",
+        "HARDWARE SET NO. 1",
+    ],
+)
+def test_non_terminators(text):
+    from hardware_sets.detection.sets import is_region_end
+
+    assert not is_region_end(line(text))

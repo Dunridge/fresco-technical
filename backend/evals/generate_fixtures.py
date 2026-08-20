@@ -311,11 +311,67 @@ def build_fixture_04(path: Path) -> None:
     doc.close()
 
 
+def build_fixture_05(path: Path) -> None:
+    """Set identifier as a *column*, not a header line.
+
+    Modelled on a real specbook family: one continuous table whose leftmost
+    column carries the set id, sets delimited by that id changing, and a
+    combined `MANUFACTURER - PRODUCT` column. The header row repeats on the
+    second page, which previously got stripped as a running header.
+    """
+    doc = pymupdf.open()
+    cols = {"set": 55.0, "type": 150.0, "mfr": 250.0, "qty": 430.0, "fin": 470.0}
+
+    def header_row(b: PageBuilder) -> None:
+        b.row(
+            [
+                (cols["set"], "SET"),
+                (cols["type"], "HARDWARE TYPE"),
+                (cols["mfr"], "MANUFACTURER - PRODUCT"),
+                (cols["qty"], "QTY"),
+                (cols["fin"], "FINISH"),
+            ],
+            font=MONO_BOLD,
+        )
+
+    def row(b: PageBuilder, set_id: str, kind: str, product: str, qty: str, fin: str) -> None:
+        b.row(
+            [
+                (cols["set"], set_id),
+                (cols["type"], kind),
+                (cols["mfr"], product),
+                (cols["qty"], qty),
+                (cols["fin"], fin),
+            ]
+        )
+
+    b = PageBuilder(doc.new_page(width=PAGE.width, height=PAGE.height))
+    _running_header(b, "NORTHSIDE BRANCH LIBRARY", "087100-1")
+    header_row(b)
+    row(b, "1.1", "CYLINDER", "SCHLAGE - FSIC PRIMUS", "1", "613")
+    row(b, "1.2", "MORTISE HINGE", "IVES - 5BB1 4.5", "3", "613")
+    row(b, "", "MORTISE LOCKSET", "SCHLAGE - L9077", "1", "613")
+    row(b, "", "SURFACE CLOSER", "LCN - 4040XP", "1", "691")
+    row(b, "2.1", "CONT HINGE", "IVES - 224HD", "2", "628")
+    row(b, "", "EXIT DEVICE", "VON DUPRIN - 99L", "1", "626")
+
+    b = PageBuilder(doc.new_page(width=PAGE.width, height=PAGE.height))
+    _running_header(b, "NORTHSIDE BRANCH LIBRARY", "087100-2")
+    header_row(b)
+    row(b, "", "THRESHOLD", "PEMKO - 171A", "1", "AL")
+    row(b, "3.1", "WALL STOP", "IVES - WS406CCV", "1", "626")
+    row(b, "", "SILENCER", "IVES - SR64", "3", "GRY")
+
+    doc.save(path)
+    doc.close()
+
+
 BUILDERS = {
     "fixture_01_table_schedule.pdf": build_fixture_01,
     "fixture_02_list_sections.pdf": build_fixture_02,
     "fixture_03_alt_schema.pdf": build_fixture_03,
     "fixture_04_merged_columns.pdf": build_fixture_04,
+    "fixture_05_set_column.pdf": build_fixture_05,
 }
 
 

@@ -162,12 +162,12 @@ and finish sharing a column, and set numbers like `3A`.
 ## Accuracy
 
 ```text
-CORPUS OVERALL ACCURACY: 100.0%  (348/348 assertions)
+CORPUS OVERALL ACCURACY: 100.0%  (414/414 assertions)
 no failures
 ```
 
 **Read that number with its caveat.** The challenge specbooks are not
-redistributable, so the evaluation corpus is four PDFs written for this
+redistributable, so the evaluation corpus is five PDFs written for this
 repository to reproduce the layout families and caveats the challenge describes.
 100% means the pipeline handles those structures correctly — it is **not** a
 measurement against the real corpus.
@@ -182,6 +182,35 @@ What makes it more than self-congratulation:
   a footer instead of a header. It failed in four distinct ways on first run.
   Each was fixed at the root cause, not special-cased, and fixtures 01–03 did not
   regress.
+
+### Validation against the real challenge corpus
+
+The extractor was run over the 43 PDFs (413 MB, 21 projects) from the challenge's
+Drive folder. That corpus is not in this repository, but the run drove seven
+root-cause fixes that the synthetic fixtures could not have surfaced:
+
+| | Before | After |
+| --- | --- | --- |
+| Files that crashed | 4 | **0** |
+| Files yielding sets | 16 / 43 | **22 / 43** |
+| Hardware sets found | 639 | **1,191** |
+| Components | 10,544 | 12,634 |
+| Null-quantity rate | 48% | **12%** |
+
+The seven fixes: a divide-by-zero on empty columns; sets running past the end of
+their section (one "set" spanned 455 pages of an unrelated division); a repeated
+column header being stripped as page furniture; header spacing bridging two real
+columns; the union-gap rule erasing a boundary when one long cell overflowed;
+and three unrecognised header conventions (`Hardware Group/Set #A1`, `HW-1`,
+`PART 163 - PROVIDE EACH...`). Each is now covered by a regression test.
+
+The falling null-quantity rate is the clearest signal: nearly half of all
+extracted components previously had no quantity, because runaway regions were
+swallowing prose from other divisions and counting it as hardware.
+
+**Set counts are not accuracy.** Field mapping was spot-checked by eye on several
+documents and looks correct, but only the fixture corpus is scored against
+hand-verified ground truth.
 
 To measure against real documents, drop them anywhere under `backend/samples/`
 (nested folders are fine) and run the batch report:
@@ -255,7 +284,7 @@ backend/
 │   ├── llm.py                 # optional refinement (off by default)
 │   ├── cli.py                 # python -m hardware_sets
 │   └── api.py                 # FastAPI app for the UI
-├── tests/                     # 109 tests
+├── tests/                     # 133 tests
 ├── evals/
 │   ├── generate_fixtures.py   # builds the fixture PDFs
 │   ├── parser_comparison.py   # the PyMuPDF vs pdfplumber experiment
@@ -274,7 +303,12 @@ frontend/
 ## Known limitations
 
 * **Scanned pages are not OCR'd.** A page with no text layer is reported in
-  `warnings` rather than processed.
+  `warnings` rather than processed. In the real corpus this affects two
+  documents outright (one 1,546-page manual is ~180 image-only pages) and
+  partially affects several more.
+* **Narrative specs extract weakly.** A schedule written as prose rather than a
+  table ("4 Ea. Hanging and Closing Devices...") yields its sets but maps fields
+  poorly - there is little column geometry to read.
 * **Columns separated by less than ~1.6 character widths merge.** The
   manufacturer/finish case has a dedicated splitter; a description overrunning
   into a catalog column does not.

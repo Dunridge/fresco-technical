@@ -24,6 +24,12 @@ from . import vocab
 
 MIN_GAP_SPACE_MULTIPLIER = 1.6
 MIN_GAP_ABSOLUTE = 4.0
+# Share of rows allowed to overflow a separator before it stops being one. A
+# strict union works for a short region, but over hundreds of rows a single
+# long cell that spills into its neighbour would erase the boundary for every
+# other row. Small regions round this to zero, keeping the strict behaviour.
+COLUMN_OVERFLOW_TOLERANCE = 0.08
+BIN_WIDTH = 1.0
 FIELD_SCORE_FLOOR = 0.34
 HEADER_BONUS = 0.55
 
@@ -80,21 +86,22 @@ def _estimate_space_width(lines: list[Line]) -> float:
 
 
 def detect_columns(lines: list[Line]) -> list[Column]:
-    """Recover column intervals from the union of word extents across rows."""
+    """Recover column intervals from where words sit across rows."""
     words = [w for line in lines for w in line.words]
     if not words:
         return []
 
     space_width = _estimate_space_width(lines)
     min_gap = max(space_width * MIN_GAP_SPACE_MULTIPLIER, MIN_GAP_ABSOLUTE)
+    tolerance = int(len(lines) * COLUMN_OVERFLOW_TOLERANCE)
 
-    intervals = sorted((w.x0, w.x1) for w in words)
-    merged: list[list[float]] = [list(intervals[0])]
-    for x0, x1 in intervals[1:]:
-        if x0 - merged[-1][1] < min_gap:
-            merged[-1][1] = max(merged[-1][1], x1)
-        else:
-            merged.append([x0, x1])
+    merged = (
+        _merge_by_union(words, min_gap)
+        if tolerance <= 0
+        else _merge_by_occupancy(lines, words, min_gap, tolerance)
+    )
+    if not merged:
+        return []
 
     columns: list[Column] = []
     for index, (x0, x1) in enumerate(merged):
@@ -102,6 +109,58 @@ def detect_columns(lines: list[Line]) -> list[Column]:
         right = x1 + min_gap / 2 if index < len(merged) - 1 else float("inf")
         columns.append(Column(index=index, x0=left, x1=right, raw_x0=x0, raw_x1=x1))
     return columns
+
+
+def _merge_by_union(words: list[Word], min_gap: float) -> list[list[float]]:
+    intervals = sorted((w.x0, w.x1) for w in words)
+    merged: list[list[float]] = [list(intervals[0])]
+    for x0, x1 in intervals[1:]:
+        if x0 - merged[-1][1] < min_gap:
+            merged[-1][1] = max(merged[-1][1], x1)
+        else:
+            merged.append([x0, x1])
+    return merged
+
+
+def _merge_by_occupancy(
+    lines: list[Line], words: list[Word], min_gap: float, tolerance: int
+) -> list[list[float]]:
+    """Treat an x-range as a separator when few enough rows cross it."""
+    left = min(w.x0 for w in words)
+    right = max(w.x1 for w in words)
+    bin_count = max(int((right - left) / BIN_WIDTH) + 1, 1)
+    crossings = [0] * bin_count
+
+    for line in lines:
+        touched: set[int] = set()
+        for word in line.words:
+            start = max(int((word.x0 - left) / BIN_WIDTH), 0)
+            end = min(int((word.x1 - left) / BIN_WIDTH), bin_count - 1)
+            touched.update(range(start, end + 1))
+        for index in touched:
+            crossings[index] += 1
+
+    spans: list[list[float]] = []
+    run_start: int | None = None
+    for index, count in enumerate(crossings):
+        occupied = count > tolerance
+        if occupied and run_start is None:
+            run_start = index
+        elif not occupied and run_start is not None:
+            gap_width = _clear_run_width(crossings, index, tolerance)
+            if gap_width >= min_gap:
+                spans.append([left + run_start * BIN_WIDTH, left + index * BIN_WIDTH])
+                run_start = None
+    if run_start is not None:
+        spans.append([left + run_start * BIN_WIDTH, right])
+    return spans or _merge_by_union(words, min_gap)
+
+
+def _clear_run_width(crossings: list[int], start: int, tolerance: int) -> float:
+    index = start
+    while index < len(crossings) and crossings[index] <= tolerance:
+        index += 1
+    return (index - start) * BIN_WIDTH
 
 
 def cells_for_line(line: Line, columns: list[Column]) -> list[str]:
