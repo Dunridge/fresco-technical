@@ -152,13 +152,25 @@ def segment_line(line: Line, min_gap: float) -> list[list[Word]]:
     return groups
 
 
-def looks_like_data_row(line: Line, min_gap: float) -> bool:
-    """A row carrying several distinct cells - a component, not page furniture."""
+def looks_like_component_row(line: Line, min_gap: float) -> bool:
+    """A row that carries a hardware component, so it is never page furniture.
+
+    Column count alone is not enough: a project title block
+    (`1674070/10350997  Henry Ford Hospital - Expansion  MARCH 2025`) also has
+    several columns, and protecting it let a running header through as a
+    component. A component row additionally starts with a plausible quantity or
+    names a unit.
+    """
+    from ..classification.vocab import UNIT_CODES
+
     segments = len(segment_line(line, min_gap))
-    if segments >= MIN_SEGMENTS_FOR_DATA_ROW:
-        return True
-    first = line.words[0].text.strip().rstrip(".") if line.words else ""
-    return segments >= 2 and first.isdigit()
+    if segments < 2 or not line.words:
+        return False
+    tokens = [w.text.strip().rstrip(".,").upper() for w in line.words[:3]]
+    first = tokens[0]
+    starts_with_quantity = first.isdigit() and 0 < len(first) <= 3 and int(first) > 0
+    names_a_unit = any(token in UNIT_CODES for token in tokens)
+    return starts_with_quantity or names_a_unit
 
 
 def bbox_union(boxes: list[list[float]]) -> list[float]:

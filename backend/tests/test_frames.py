@@ -76,6 +76,30 @@ def test_repeated_component_row_near_a_page_edge_survives():
     assert (1, 0) in frames and (1, 2) in frames
 
 
+def test_repeated_title_block_is_still_stripped():
+    """Column count alone must not protect a line - a title block has columns too."""
+    title = [
+        (72.0, "1674070/10350997"),
+        (220.0, "Henry Ford Hospital - Expansion"),
+        (470.0, "MARCH 2025"),
+    ]
+    pages = [
+        Page(
+            number=n,
+            width=612,
+            height=792,
+            lines=[
+                spaced(n, 0, title, 40),
+                line(n, 1, "HARDWARE SET NO. 1", 300),
+            ],
+        )
+        for n in (1, 2, 3)
+    ]
+    frames = detect_frame_lines(_document(pages))
+    assert (1, 0) in frames, "a repeated title block should be stripped as page furniture"
+    assert (1, 1) not in frames
+
+
 def test_single_page_documents_strip_nothing():
     page = Page(
         number=1,

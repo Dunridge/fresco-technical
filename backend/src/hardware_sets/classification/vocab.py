@@ -29,10 +29,10 @@ MANUFACTURER_NAMES = {
 
 # Named finishes that are not covered by the numeric/US patterns below.
 FINISH_WORDS = {
-    "ALUM", "ALUMINUM", "ANOD", "BK", "BLACK", "BLK", "BRASS", "BRONZE", "BRZ",
-    "BSP", "CHROME", "CL", "CLEAR", "DBRZ", "DKB", "DURO", "GALV", "GREY",
-    "GRY", "IVORY", "MILL", "ORB", "PAINTED", "PRIME", "PRIMED", "PTD",
-    "SATIN", "SS", "STAINLESS", "WHITE", "WHT",
+    "ALM", "ALUM", "ALUMINUM", "ANOD", "BBLK", "BK", "BLACK", "BLK", "BRASS",
+    "BRONZE", "BRZ", "BSP", "CHROME", "CL", "CLEAR", "DBRZ", "DKB", "DURO",
+    "GALV", "GREY", "GRY", "IVORY", "MILL", "ORB", "PAINTED", "PRIME",
+    "PRIMED", "PTD", "SATIN", "SS", "STAINLESS", "WHITE", "WHT",
 }
 
 # Codes that specbooks genuinely use for both a manufacturer and a finish.
@@ -45,6 +45,14 @@ AMBIGUOUS_CODES = {
     "PC",   # (mfr shorthand)  | Prime Coat / Powder Coat
     "BR",   # (mfr shorthand)  | Bronze
     "SP",   # (mfr shorthand)  | Special / Sprayed
+}
+
+# Door handing designations. These sit in schedules beside hardware codes but
+# name neither a manufacturer nor a finish, and the "unknown short code is
+# probably a manufacturer" fallback was reading them as manufacturers - which
+# outvoted the real finishes in the same column.
+HANDING_CODES = {
+    "LH", "RH", "LHR", "RHR", "LHA", "RHA", "LHRB", "RHRB", "RHRA", "LHRA",
 }
 
 UNIT_CODES = {
@@ -76,6 +84,8 @@ NOTE_WORDS = {
 }
 
 US_FINISH_RE = re.compile(r"^US\d{1,2}[A-Z]{0,2}$")
+# Canadian schedules use the same numbering with a C prefix: C26D, C32D.
+CDN_FINISH_RE = re.compile(r"^C\d{1,2}[A-Z]{0,2}$")
 BHMA_FINISH_RE = re.compile(r"^[6-7]\d{2}[A-Z]{0,2}$")
 SHORT_FINISH_RE = re.compile(r"^(?:SP|SPR)\d{1,3}[A-Z]?$")
 PLAIN_INT_RE = re.compile(r"^\d{1,4}$")
@@ -91,9 +101,14 @@ def is_ambiguous_code(value: str) -> bool:
     return normalize_code(value) in AMBIGUOUS_CODES
 
 
+def is_non_field_code(value: str) -> bool:
+    """True for codes that name neither a manufacturer nor a finish."""
+    return normalize_code(value) in HANDING_CODES
+
+
 def looks_like_manufacturer(value: str) -> bool:
     code = normalize_code(value)
-    if not code or code in AMBIGUOUS_CODES:
+    if not code or code in AMBIGUOUS_CODES or code in HANDING_CODES:
         return False
     if code in MANUFACTURER_CODES or code in MANUFACTURER_NAMES:
         return True
@@ -104,16 +119,23 @@ def looks_like_manufacturer(value: str) -> bool:
 
 def looks_like_finish(value: str) -> bool:
     code = normalize_code(value)
-    if not code or code in AMBIGUOUS_CODES:
+    if not code or code in AMBIGUOUS_CODES or code in HANDING_CODES:
         return False
     if code in FINISH_WORDS:
         return True
-    if US_FINISH_RE.match(code) or BHMA_FINISH_RE.match(code) or SHORT_FINISH_RE.match(code):
+    if (
+        US_FINISH_RE.match(code)
+        or CDN_FINISH_RE.match(code)
+        or BHMA_FINISH_RE.match(code)
+        or SHORT_FINISH_RE.match(code)
+    ):
         return True
     # Composite finishes such as "US26D/US32D" or "630/626".
     parts = [p for p in re.split(r"[/&+-]", code) if p]
     return len(parts) > 1 and all(
-        US_FINISH_RE.match(p) or BHMA_FINISH_RE.match(p) or p in FINISH_WORDS for p in parts
+        US_FINISH_RE.match(p) or CDN_FINISH_RE.match(p) or BHMA_FINISH_RE.match(p)
+        or p in FINISH_WORDS
+        for p in parts
     )
 
 
