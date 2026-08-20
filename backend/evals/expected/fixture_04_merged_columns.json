@@ -1,0 +1,48 @@
+{
+  "source": "fixture_04_merged_columns.pdf",
+  "notes": "Held-out generalisation case authored after the pipeline. Manufacturer and finish share one column, quantity and unit share a cell, set 8's manufacturer codes are all the ambiguous PE, boilerplate prose sits between sets, page furniture is a footer, one component has no catalog number and set numbers skip from 9 to 12.",
+  "hardware_sets": [
+    {
+      "set_number": "7",
+      "description": null,
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 3, "description": "HINGE", "catalog_number": "TA2714 4-1/2 X 4-1/2", "mfr": "MK", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "ENTRANCE LOCK", "catalog_number": "L9453P 06A", "mfr": "SCH", "finish": "626", "notes": null},
+        {"qty": 1, "description": "SURFACE CLOSER", "catalog_number": "4040XP EDA", "mfr": "LCN", "finish": "689", "notes": null},
+        {"qty": 1, "description": "FLOOR STOP", "catalog_number": "441CU", "mfr": "IVE", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "SEALS", "catalog_number": null, "mfr": "ZE", "finish": "BK", "notes": null}
+      ]
+    },
+    {
+      "set_number": "8",
+      "description": "VESTIBULE DOORS",
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 2, "description": "HINGE", "catalog_number": "BB1168 4-1/2 X 4-1/2", "mfr": "PE", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "PUSH PLATE", "catalog_number": "70C 4 X 16", "mfr": "PE", "finish": "US32D", "notes": null},
+        {"qty": 1, "description": "PULL PLATE", "catalog_number": "111X70C", "mfr": "PE", "finish": "US32D", "notes": null}
+      ]
+    },
+    {
+      "set_number": "9",
+      "description": "NOT USED",
+      "not_used": true,
+      "pages": [2],
+      "components": []
+    },
+    {
+      "set_number": "12",
+      "description": null,
+      "not_used": false,
+      "pages": [2],
+      "components": [
+        {"qty": 3, "description": "HINGE", "catalog_number": "TA714", "mfr": "MK", "finish": "US26D", "notes": null},
+        {"qty": 1, "description": "STOREROOM LOCK", "catalog_number": "L9080P 06A", "mfr": "SCH", "finish": "626", "notes": null},
+        {"qty": 1, "description": "WALL STOP", "catalog_number": "WS406CCV", "mfr": "IVE", "finish": "US26D", "notes": "MOUNT AT 42 AFF"}
+      ]
+    }
+  ]
+}

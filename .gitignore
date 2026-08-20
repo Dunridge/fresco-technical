@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Local artifacts
+# Real specbooks live here for local testing and must never be committed.
+# Drive downloads keep one subfolder per project, so this has to recurse.
+backend/samples/**
+!backend/samples/.gitkeep
+*.log
+.DS_Store

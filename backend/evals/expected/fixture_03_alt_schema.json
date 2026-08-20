@@ -1,0 +1,37 @@
+{
+  "source": "fixture_03_alt_schema.pdf",
+  "notes": "Third schema: MFG column first, a REMARKS column, GROUP instead of SET, a manufacturer abbreviation legend on the page, and an explicit (CONT'D) continuation across a page break.",
+  "hardware_sets": [
+    {
+      "set_number": "3A",
+      "description": "PROVIDE EACH SINGLE DOOR TO HAVE THE FOLLOWING",
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 3, "description": "HINGE", "catalog_number": "T4A3786 4-1/2", "mfr": "MK", "finish": "652", "notes": null},
+        {"qty": 1, "description": "OFFICE LOCK", "catalog_number": "ND50PD RHO", "mfr": "SCH", "finish": "626", "notes": "SEE NOTE 4"},
+        {"qty": 1, "description": "DOOR CLOSER", "catalog_number": "7500", "mfr": "NO", "finish": "689", "notes": null},
+        {"qty": null, "description": "SILENCER", "catalog_number": "SR64", "mfr": "IVE", "finish": "GRY", "notes": "OMIT AT GASKETED"}
+      ]
+    },
+    {
+      "set_number": "4",
+      "description": "PROVIDE EACH PAIR OF DOORS TO HAVE THE FOLLOWING",
+      "not_used": false,
+      "pages": [1, 2],
+      "components": [
+        {"qty": 6, "description": "HINGE", "catalog_number": "T4A3786 4-1/2", "mfr": "MK", "finish": "652", "notes": null},
+        {"qty": 1, "description": "EXIT DEVICE", "catalog_number": "98EO", "mfr": "SCH", "finish": "626", "notes": null},
+        {"qty": 2, "description": "DOOR CLOSER", "catalog_number": "4040XP REG", "mfr": "LCN", "finish": "689", "notes": null},
+        {"qty": 1, "description": "THRESHOLD", "catalog_number": "2005AV", "mfr": "PE", "finish": "AL", "notes": "FIELD CUT"}
+      ]
+    },
+    {
+      "set_number": "5",
+      "description": "NOT APPLICABLE",
+      "not_used": true,
+      "pages": [2],
+      "components": []
+    }
+  ]
+}

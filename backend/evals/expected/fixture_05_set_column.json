@@ -1,0 +1,47 @@
+{
+  "source": "fixture_05_set_column.pdf",
+  "notes": "Second layout family: the set identifier is a column, not a header line, and sets are delimited by that identifier changing. Also covers a combined MANUFACTURER - PRODUCT column, a header row repeated on page 2 (which must not be stripped as page furniture), and a set continuing across the page break.",
+  "hardware_sets": [
+    {
+      "set_number": "1.1",
+      "description": null,
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 1, "description": "CYLINDER", "catalog_number": "FSIC PRIMUS", "mfr": "SCHLAGE", "finish": "613", "notes": null}
+      ]
+    },
+    {
+      "set_number": "1.2",
+      "description": null,
+      "not_used": false,
+      "pages": [1],
+      "components": [
+        {"qty": 3, "description": "MORTISE HINGE", "catalog_number": "5BB1 4.5", "mfr": "IVES", "finish": "613", "notes": null},
+        {"qty": 1, "description": "MORTISE LOCKSET", "catalog_number": "L9077", "mfr": "SCHLAGE", "finish": "613", "notes": null},
+        {"qty": 1, "description": "SURFACE CLOSER", "catalog_number": "4040XP", "mfr": "LCN", "finish": "691", "notes": null}
+      ]
+    },
+    {
+      "set_number": "2.1",
+      "description": null,
+      "not_used": false,
+      "pages": [1, 2],
+      "components": [
+        {"qty": 2, "description": "CONT HINGE", "catalog_number": "224HD", "mfr": "IVES", "finish": "628", "notes": null},
+        {"qty": 1, "description": "EXIT DEVICE", "catalog_number": "99L", "mfr": "VON DUPRIN", "finish": "626", "notes": null},
+        {"qty": 1, "description": "THRESHOLD", "catalog_number": "171A", "mfr": "PEMKO", "finish": "AL", "notes": null}
+      ]
+    },
+    {
+      "set_number": "3.1",
+      "description": null,
+      "not_used": false,
+      "pages": [2],
+      "components": [
+        {"qty": 1, "description": "WALL STOP", "catalog_number": "WS406CCV", "mfr": "IVES", "finish": "626", "notes": null},
+        {"qty": 3, "description": "SILENCER", "catalog_number": "SR64", "mfr": "IVES", "finish": "GRY", "notes": null}
+      ]
+    }
+  ]
+}
