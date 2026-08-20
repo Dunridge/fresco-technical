@@ -13,11 +13,21 @@ from statistics import median
 
 from ..classification import vocab
 from ..detection.sets import is_column_header_line
-from ..parsing.layout import Line, Word
+from ..parsing.layout import (
+    MIN_SEGMENTS_FOR_DATA_ROW,
+    Line,
+    Word,
+    estimate_min_gap,
+    segment_line,
+)
 
-MIN_GAP_SPACE_MULTIPLIER = 1.6
-MIN_GAP_ABSOLUTE = 4.0
-MIN_SEGMENTS_FOR_DATA_ROW = 3
+__all__ = [
+    "ClassifiedRow",
+    "RowKind",
+    "classify_rows",
+    "estimate_min_gap",
+    "segment_line",
+]
 
 
 class RowKind(str, Enum):
@@ -31,30 +41,6 @@ class ClassifiedRow:
     line: Line
     kind: RowKind
     segments: int
-
-
-def estimate_min_gap(lines: list[Line]) -> float:
-    widths = [
-        (w.x1 - w.x0) / max(len(w.text), 1)
-        for line in lines
-        for w in line.words
-        if w.text
-    ]
-    char_width = median(widths) if widths else 5.0
-    return max(char_width * MIN_GAP_SPACE_MULTIPLIER, MIN_GAP_ABSOLUTE)
-
-
-def segment_line(line: Line, min_gap: float) -> list[list[Word]]:
-    """Split a row into cell-like runs separated by more than one space."""
-    if not line.words:
-        return []
-    groups: list[list[Word]] = [[line.words[0]]]
-    for word in line.words[1:]:
-        if word.x0 - groups[-1][-1].x1 >= min_gap:
-            groups.append([word])
-        else:
-            groups[-1].append(word)
-    return groups
 
 
 def _starts_with_quantity(line: Line) -> bool:

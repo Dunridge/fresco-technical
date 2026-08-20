@@ -61,6 +61,9 @@ class ExtractionResponse(BaseModel):
 class FeedbackPayload(BaseModel):
     hardware_sets: list[HardwareSet] = Field(default_factory=list)
     note: str | None = None
+    # Set numbers the reviewer actually opened. A golden may only be built from
+    # these - see evals/golden_from_review.py.
+    reviewed_set_numbers: list[str] = Field(default_factory=list)
 
 
 def _document_dir(document_id: str) -> Path:

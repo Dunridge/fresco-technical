@@ -27,11 +27,16 @@ export async function saveFeedback(
   documentId: string,
   hardwareSets: HardwareSet[],
   note?: string,
+  reviewedSetNumbers: string[] = [],
 ): Promise<{ saved: boolean }> {
   const response = await fetch(`${API_URL}/documents/${documentId}/feedback`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ hardware_sets: hardwareSets, note: note ?? null }),
+    body: JSON.stringify({
+      hardware_sets: hardwareSets,
+      note: note ?? null,
+      reviewed_set_numbers: reviewedSetNumbers,
+    }),
   });
   return unwrap<{ saved: boolean }>(response);
 }

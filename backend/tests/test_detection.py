@@ -129,3 +129,20 @@ def test_non_terminators(text):
     from hardware_sets.detection.sets import is_region_end
 
     assert not is_region_end(line(text))
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # A real specbook writes `Hardware Group No. 18: (Door ST-1C)`. Stripping
+        # the opening bracket as a separator used to leave `Door ST-1C)`.
+        ("HARDWARE GROUP NO. 18: (Door ST-1C)", "Door ST-1C"),
+        ("HARDWARE GROUP NO. 19: (Doors ST-1A, ST-1B & ST-2)", "Doors ST-1A, ST-1B & ST-2"),
+        ("HARDWARE SET 3 - ENTRANCE DOORS", "ENTRANCE DOORS"),
+        ("HARDWARE SET 4: LOBBY (NORTH)", "LOBBY (NORTH)"),
+    ],
+)
+def test_descriptions_keep_brackets_balanced(text, expected):
+    matched = match_set_header(line(text))
+    assert matched is not None
+    assert matched[1] == expected

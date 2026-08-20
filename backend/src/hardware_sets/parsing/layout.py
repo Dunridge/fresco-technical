@@ -122,6 +122,45 @@ def group_words_into_lines(words: list[Word], page_number: int) -> list[Line]:
     return lines
 
 
+MIN_GAP_SPACE_MULTIPLIER = 1.6
+MIN_GAP_ABSOLUTE = 4.0
+MIN_SEGMENTS_FOR_DATA_ROW = 3
+
+
+def estimate_min_gap(lines: list[Line]) -> float:
+    """The x-gap that separates two cells rather than two words in one cell."""
+    widths = [
+        (w.x1 - w.x0) / max(len(w.text), 1)
+        for line in lines
+        for w in line.words
+        if w.text
+    ]
+    char_width = median(widths) if widths else 5.0
+    return max(char_width * MIN_GAP_SPACE_MULTIPLIER, MIN_GAP_ABSOLUTE)
+
+
+def segment_line(line: Line, min_gap: float) -> list[list[Word]]:
+    """Split a row into cell-like runs separated by more than one space."""
+    if not line.words:
+        return []
+    groups: list[list[Word]] = [[line.words[0]]]
+    for word in line.words[1:]:
+        if word.x0 - groups[-1][-1].x1 >= min_gap:
+            groups.append([word])
+        else:
+            groups[-1].append(word)
+    return groups
+
+
+def looks_like_data_row(line: Line, min_gap: float) -> bool:
+    """A row carrying several distinct cells - a component, not page furniture."""
+    segments = len(segment_line(line, min_gap))
+    if segments >= MIN_SEGMENTS_FOR_DATA_ROW:
+        return True
+    first = line.words[0].text.strip().rstrip(".") if line.words else ""
+    return segments >= 2 and first.isdigit()
+
+
 def bbox_union(boxes: list[list[float]]) -> list[float]:
     xs0 = [b[0] for b in boxes]
     ys0 = [b[1] for b in boxes]

@@ -152,9 +152,23 @@ def match_set_header(line: Line) -> tuple[str, str | None, bool] | None:
         rest = groups.get("rest") or ""
         is_continuation = bool(CONTINUATION_RE.search(rest))
         description = CONTINUATION_RE.sub("", rest)
-        description = description.strip().lstrip("-\u2013\u2014:.,)( ").strip()
+        description = _clean_description(description)
         return normalize_set_number(groups["number"]), description or None, is_continuation
     return None
+
+
+def _clean_description(text: str) -> str:
+    """Trim separators without leaving a bracket unbalanced.
+
+    `Hardware Group No. 18: (Door ST-1C)` used to yield `Door ST-1C)` - the
+    opening bracket was stripped as a separator while the closing one survived.
+    """
+    cleaned = text.strip().lstrip("-\u2013\u2014:., ").strip()
+    while cleaned.startswith("(") and cleaned.endswith(")") and "(" not in cleaned[1:-1]:
+        cleaned = cleaned[1:-1].strip()
+    if cleaned.count("(") != cleaned.count(")"):
+        cleaned = cleaned.strip("()").strip()
+    return cleaned
 
 
 def is_column_header_line(line: Line) -> bool:
