@@ -58,7 +58,9 @@ export function ComponentTable() {
           <button
             type="button"
             onClick={() => void save(note || undefined)}
-            className={reviewComplete ? undefined : "ghost"}
+            // Once saved, drop back to the quiet secondary style: the work is
+            // done, so the button should stop competing for attention.
+            className={saveState === "saved" || !reviewComplete ? "ghost" : undefined}
             disabled={!canSave || saveState === "saving"}
             title={
               reviewComplete
@@ -66,11 +68,18 @@ export function ComponentTable() {
                 : `Saves what you have so far. Exporting a golden needs all ${reviewProgress.total} sets checked.`
             }
           >
-            {saveState === "saving"
-              ? "Saving…"
-              : saveState === "saved"
-                ? "Saved"
-                : saveLabel}
+            {saveState === "saving" ? (
+              "Saving…"
+            ) : saveState === "saved" ? (
+              <>
+                <span className="btn__check" aria-hidden="true">
+                  &#10003;
+                </span>
+                Saved
+              </>
+            ) : (
+              saveLabel
+            )}
           </button>
         </div>
       </header>

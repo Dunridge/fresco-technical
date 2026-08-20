@@ -75,6 +75,7 @@ button {
 button:hover:not(:disabled) { background: var(--green-700); border-color: var(--green-700); }
 button:disabled { opacity: 0.45; cursor: not-allowed; }
 button.ghost { background: #fff; color: var(--text-2); border-color: var(--line); font-weight: 550; }
+.btn__check { color: var(--green-600); margin-right: 7px; font-weight: 700; }
 button.ghost:hover:not(:disabled) { background: var(--surface-2); border-color: #d1d5db; }
 
 input[type="text"], input:not([type]) {
