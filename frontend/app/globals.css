@@ -30,6 +30,7 @@
   --red-200: #fecaca;
   --red-600: #dc2626;
 
+  --header-h: 58px;
   --radius: 8px;
   --radius-lg: 14px;
   --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px rgba(16, 24, 40, 0.06);
@@ -47,14 +48,36 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-main { max-width: 1400px; margin: 0 auto; padding: 40px 24px 72px; }
+/* Content stays centred in a fixed column; only the app bar spans the window,
+   so the logo hugs the edge the way it does on fresco.build. */
+main { max-width: 1400px; margin: 0 auto; padding: 24px 24px 72px; }
+
+/* Sticky app bar, mirroring the Fresco product shell. */
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.appbar__inner {
+  width: 100%;
+  /* Full width: the logo hugs the edge on any screen, as it does on the site. */
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.appbar__logo { display: block; width: 30px; height: 30px; object-fit: contain; }
+.appbar__title { font-weight: 650; font-size: 15.5px; letter-spacing: -0.01em; color: var(--text); }
 
 h1, h2 { margin: 0 0 6px; line-height: 1.2; color: var(--text); letter-spacing: -0.01em; }
 h1 { font-size: 30px; font-weight: 700; }
 h2 { font-size: 17px; font-weight: 650; }
-
-.masthead { margin-bottom: 24px; }
-.masthead p { margin: 0; color: var(--muted); }
 
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
@@ -158,9 +181,9 @@ input:focus { outline: 2px solid var(--blue-500); outline-offset: -1px; backgrou
 .setlist {
   padding: 18px;
   position: sticky;
-  top: 20px;
-  /* Never taller than the viewport, so the whole panel stays reachable. */
-  max-height: calc(100vh - 40px);
+  top: calc(var(--header-h) + 20px);
+  /* Never taller than the space below the app bar, so the panel stays reachable. */
+  max-height: calc(100vh - var(--header-h) - 40px);
   display: flex;
   flex-direction: column;
 }

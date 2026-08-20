@@ -18,7 +18,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <ExtractionProvider>{children}</ExtractionProvider>
+        <ExtractionProvider>
+          <header className="appbar">
+            <div className="appbar__inner">
+              {/* The app icon doubles as the mark; Next serves it from app/icon.png. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="appbar__logo" src="/icon.png" alt="Fresco" width={30} height={30} />
+              <span className="appbar__title">Hardware Set Extractor</span>
+            </div>
+          </header>
+          {children}
+        </ExtractionProvider>
       </body>
     </html>
   );
