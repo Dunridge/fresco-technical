@@ -19,7 +19,13 @@ export function PageViewer() {
     : [];
 
   useEffect(() => {
-    setPage(spanPages[0] ?? selectedSet?.location.page ?? null);
+    // Open on the first page that actually holds components. A set whose
+    // header sits at the foot of one page and whose rows are on the next would
+    // otherwise open on a page showing none of the rows in the table above.
+    const firstWithComponents = selectedSet?.components.find(
+      (component) => component.location,
+    )?.location?.page;
+    setPage(firstWithComponents ?? spanPages[0] ?? selectedSet?.location.page ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSet?.set_number]);
 
@@ -75,7 +81,15 @@ export function PageViewer() {
       </div>
 
       <p className="muted small">
-        The outer box is the set&rsquo;s footprint on this page; the inner boxes are its components.
+        The outer box is the set&rsquo;s footprint on this page; the inner boxes are its
+        components.
+        {spanPages.length > 1 && (
+          <>
+            {" "}
+            This set spans pages {spanPages.join(" and ")}, so some rows in the table above
+            are on the other page.
+          </>
+        )}
       </p>
     </section>
   );

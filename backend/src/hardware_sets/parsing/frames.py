@@ -13,7 +13,7 @@ import re
 from collections import defaultdict
 
 from ..detection.sets import is_column_header_line, match_set_header
-from .layout import Document, Line, estimate_min_gap, looks_like_data_row
+from .layout import Document, Line, estimate_min_gap, looks_like_component_row
 
 EDGE_FRACTION = 0.15
 Y_TOLERANCE_FRACTION = 0.02
@@ -64,7 +64,7 @@ def detect_frame_lines(document: Document) -> set[tuple[int, int]]:
             # `4 EA BB HINGE (NRP) BBLK` repeats across pages at a similar
             # height, and near a page edge it was being stripped as a footer -
             # silently deleting a real component.
-            if looks_like_data_row(line, min_gap):
+            if looks_like_component_row(line, min_gap):
                 continue
             buckets[_normalize(line.text)].append((page.number, line.index, line.y0))
 

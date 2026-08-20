@@ -184,7 +184,12 @@ def _ratio(values: list[str], predicate) -> float:
 def _mfr_finish_ratio(values: list[str], predicate) -> float:
     """Score manufacturer/finish using only unambiguous members of the column."""
     considered = [
-        v for v in values if v.strip() and not vocab.is_ambiguous_code(v) and len(v.split()) == 1
+        v
+        for v in values
+        if v.strip()
+        and not vocab.is_ambiguous_code(v)
+        and not vocab.is_non_field_code(v)
+        and len(v.split()) == 1
     ]
     if not considered:
         return 0.0

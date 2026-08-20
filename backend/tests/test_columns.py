@@ -88,3 +88,10 @@ def test_mixed_empty_and_filled_columns_classify():
     classify_columns(columns)
     assert columns[1].field_ is Field_.QTY
     assert columns[2].field_ is Field_.DESCRIPTION
+
+
+def test_handing_codes_do_not_outvote_finishes_in_a_column():
+    """A real schedule mixed LHR/RHR with C32D/630; the column is finishes."""
+    columns = [column(["LHR", "RHR", "RHR", "C32D", "630", "630"], 0, 0.0)]
+    classify_columns(columns)
+    assert columns[0].field_ is Field_.FINISH
