@@ -20,7 +20,9 @@ next-env.d.ts
 .env.*.local
 
 # Local artifacts
-backend/samples/*.pdf
+# Real specbooks live here for local testing and must never be committed.
+# Drive downloads keep one subfolder per project, so this has to recurse.
+backend/samples/**
 !backend/samples/.gitkeep
 *.log
 .DS_Store

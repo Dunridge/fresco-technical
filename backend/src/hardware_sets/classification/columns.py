@@ -153,7 +153,11 @@ def _description_score(values: list[str]) -> float:
 
 def _notes_score(values: list[str]) -> float:
     filled = [v for v in values if v.strip()]
-    if not filled or len(filled) == len(values):
+    if not filled:
+        # A column with nothing in it scores zero, and must not reach the
+        # per-value average below - that divided by zero on real documents.
+        return 0.0
+    if len(filled) == len(values):
         # A fully populated column is a data column, not a remarks column.
         sparsity = 0.0
     else:

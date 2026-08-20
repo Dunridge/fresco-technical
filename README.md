@@ -183,8 +183,16 @@ What makes it more than self-congratulation:
   Each was fixed at the root cause, not special-cased, and fixtures 01–03 did not
   regress.
 
-To measure against real documents, drop them in `backend/samples/` and run the
-CLI; to add them to the corpus, write the expected JSON into `evals/expected/`.
+To measure against real documents, drop them anywhere under `backend/samples/`
+(nested folders are fine) and run the batch report:
+
+```bash
+python evals/batch_report.py
+```
+
+It walks every PDF, never stops on a bad file, and sorts problems to the top —
+files that yielded no sets, crashed, or have no text layer. To add a document to
+the golden corpus, write its expected JSON into `evals/expected/`.
 
 The metric is defined precisely in `evals/evaluate.py`: the share of individual
 assertions that are correct — 3 per expected set (number, description, start
@@ -352,6 +360,12 @@ python -m hardware_sets path/to/specbook.pdf --out result.json
 
 Other flags: `--compact` (single-line JSON), `--backend pdfplumber` (the
 alternate parser), `--llm` (optional refinement — needs `ANTHROPIC_API_KEY`).
+
+To triage a whole folder of specbooks at once:
+
+```bash
+python evals/batch_report.py
+```
 
 As a library:
 
