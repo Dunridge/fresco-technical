@@ -247,7 +247,7 @@ backend/
 │   ├── llm.py                 # optional refinement (off by default)
 │   ├── cli.py                 # python -m hardware_sets
 │   └── api.py                 # FastAPI app for the UI
-├── tests/                     # 93 tests
+├── tests/                     # 109 tests
 ├── evals/
 │   ├── generate_fixtures.py   # builds the fixture PDFs
 │   ├── parser_comparison.py   # the PyMuPDF vs pdfplumber experiment

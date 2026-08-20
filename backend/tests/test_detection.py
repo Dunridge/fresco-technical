@@ -27,6 +27,17 @@ def line(text: str, x0: float = 72.0) -> Line:
         ("HARDWARE GROUP 3A", "3A", None),
         ("HDW SET 04", "4", None),
         ("HARDWARE SET 12: VESTIBULE", "12", "VESTIBULE"),
+        # Letter-identified sets.
+        ("HARDWARE SET A", "A", None),
+        ("HARDWARE SET AA", "AA", None),
+        ("SET NO. A", "A", None),
+        ("SET B - EXTERIOR DOORS", "B", "EXTERIOR DOORS"),
+        # The abbreviation carries the number, with no SET word.
+        ("HW-1", "1", None),
+        ("HW 1", "1", None),
+        # Two-word prefix.
+        ("DOOR HARDWARE SET 7", "7", None),
+        ("SET 1.1", "1.1", None),
     ],
 )
 def test_header_variants(text, number, description):
@@ -43,15 +54,33 @@ def test_header_variants(text, number, description):
         "PROVIDE EACH SINGLE DOOR TO HAVE THE FOLLOWING:",
         "3 EA HINGE TA2714 MK US26D",
         "1 SET SEALS ZE BK",
+        # A letter identifier must end the heading or be followed by a
+        # separator, or ordinary prose reads as a set header.
+        "SET AS FOLLOWS",
+        "SET ALL DOORS TO SWING OUT",
+        "SET SCREWS SHALL BE STAINLESS",
+        "HARDWARE SETS ARE SCHEDULED BELOW",
+        # A bare GROUP is too common in prose to trust without a prefix.
+        "GROUP 12",
     ],
 )
 def test_non_headers_are_rejected(text):
     assert match_set_header(line(text)) is None
 
 
-def test_continuation_header_is_flagged():
-    matched = match_set_header(line("HARDWARE GROUP 4 (CONT'D)"))
-    assert matched == ("4", None, True)
+@pytest.mark.parametrize(
+    "text",
+    [
+        "HARDWARE GROUP 4 (CONT'D)",
+        "HARDWARE GROUP 4 (CONTINUED)",
+        "HARDWARE GROUP 4 (CONT.)",
+        "HARDWARE GROUP 4 CONTD",
+    ],
+)
+def test_continuation_header_is_flagged(text):
+    """`CONTINUED` must be consumed whole - matching only `CONT` used to leave
+    `INUED)` behind as the set's description."""
+    assert match_set_header(line(text)) == ("4", None, True)
 
 
 def test_column_header_line_detection():

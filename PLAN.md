@@ -1055,7 +1055,7 @@ UI and bonus features are implemented and passing.
 | --- | --- |
 | Extraction pipeline | Deterministic, 100% (348/348) on the evaluation corpus |
 | Evaluation | 4 fixtures, hand-written goldens, `python evals/evaluate.py` |
-| Tests | 93 passing (`pytest`) |
+| Tests | 109 passing (`pytest`) |
 | CLI | `python -m hardware_sets <pdf>` |
 | API | FastAPI - upload, page images, corrections |
 | UI | Next.js review interface with bbox overlay and inline correction |
