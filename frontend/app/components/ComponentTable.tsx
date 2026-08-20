@@ -29,9 +29,18 @@ export function ComponentTable() {
   );
 
   // "Nothing needed correcting" is a real outcome, so saving must not require
-  // an edit - otherwise a clean review can never be recorded at all.
+  // an edit - otherwise a clean review can never be recorded at all. Saving
+  // part-way through is allowed too, so closing the tab does not lose the work;
+  // the label says which of the two is happening, because only a complete
+  // review can be exported as a golden.
+  const reviewComplete =
+    reviewProgress.total > 0 && reviewProgress.reviewed >= reviewProgress.total;
   const canSave = hasEdits || reviewProgress.reviewed > 0;
-  const saveLabel = hasEdits ? "Save corrections" : "Save review";
+  const saveLabel = reviewComplete
+    ? hasEdits
+      ? "Save corrections"
+      : "Save review"
+    : `Save progress (${reviewProgress.reviewed} of ${reviewProgress.total})`;
 
   return (
     <section className="components">
@@ -49,18 +58,28 @@ export function ComponentTable() {
           <button
             type="button"
             onClick={() => void save(note || undefined)}
+            // Once saved, drop back to the quiet secondary style: the work is
+            // done, so the button should stop competing for attention.
+            className={saveState === "saved" || !reviewComplete ? "ghost" : undefined}
             disabled={!canSave || saveState === "saving"}
             title={
-              hasEdits
-                ? undefined
-                : "Records which sets you checked, even though nothing needed changing."
+              reviewComplete
+                ? "Records your review of every set."
+                : `Saves what you have so far. Exporting a golden needs all ${reviewProgress.total} sets checked.`
             }
           >
-            {saveState === "saving"
-              ? "Saving…"
-              : saveState === "saved"
-                ? "Saved"
-                : saveLabel}
+            {saveState === "saving" ? (
+              "Saving…"
+            ) : saveState === "saved" ? (
+              <>
+                <span className="btn__check" aria-hidden="true">
+                  &#10003;
+                </span>
+                Saved
+              </>
+            ) : (
+              saveLabel
+            )}
           </button>
         </div>
       </header>
@@ -103,6 +122,14 @@ export function ComponentTable() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {canSave && !reviewComplete && (
+        <p className="muted small components__hint">
+          {reviewProgress.total - reviewProgress.reviewed} more{" "}
+          {reviewProgress.total - reviewProgress.reviewed === 1 ? "set" : "sets"} to check before
+          this review can be exported.
+        </p>
       )}
 
       {canSave && (

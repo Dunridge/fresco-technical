@@ -11,11 +11,6 @@ export default function Home() {
 
   return (
     <main>
-      <header className="masthead">
-        <h1>Hardware Set Extractor</h1>
-        <p>Division 08 specbooks in, structured hardware sets out.</p>
-      </header>
-
       <UploadPanel />
 
       {status === "error" && error && (
