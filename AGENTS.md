@@ -624,7 +624,24 @@ Before final submission, ensure README commands have actually been executed succ
 
 ---
 
-## 24. Final Submission Checks
+## 24. Sub-Agent Policy
+
+Use sub-agents only for well-scoped tasks that can be investigated independently.
+
+Good uses:
+- compare parser behavior
+- analyze extraction failures
+- inspect edge cases
+- propose regression tests
+- review documentation
+
+Avoid parallel modifications to the same subsystem.
+
+The primary agent is responsible for integrating findings, implementing changes and running the final test/evaluation loop.
+
+---
+
+## 25. Final Submission Checks
 
 Before the project is considered ready for submission:
 
