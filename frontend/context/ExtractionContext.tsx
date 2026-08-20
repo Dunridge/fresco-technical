@@ -30,11 +30,14 @@ interface ExtractionState {
   sets: HardwareSet[];
   selectedSetNumber: string | null;
   editedFields: Set<string>;
+  /** Sets the reviewer has actually opened. Only these may become a golden. */
+  reviewedSetNumbers: Set<string>;
 }
 
 interface ExtractionValue extends ExtractionState {
   selectedSet: HardwareSet | null;
   hasEdits: boolean;
+  reviewProgress: { reviewed: number; total: number };
   upload: (file: File, useLlm: boolean) => Promise<void>;
   selectSet: (setNumber: string) => void;
   updateComponent: (
@@ -58,6 +61,7 @@ const INITIAL: ExtractionState = {
   sets: [],
   selectedSetNumber: null,
   editedFields: new Set(),
+  reviewedSetNumbers: new Set(),
 };
 
 const ExtractionContext = createContext<ExtractionValue | null>(null);
@@ -97,6 +101,12 @@ export function ExtractionProvider({ children }: { children: ReactNode }) {
         sets: clone(response.result.hardware_sets),
         selectedSetNumber: response.result.hardware_sets[0]?.set_number ?? null,
         editedFields: new Set(),
+        // Opening the first set counts as reviewing it - it is on screen.
+        reviewedSetNumbers: new Set(
+          response.result.hardware_sets[0]
+            ? [response.result.hardware_sets[0].set_number]
+            : [],
+        ),
       });
     } catch (error) {
       setState({
@@ -108,7 +118,11 @@ export function ExtractionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const selectSet = useCallback((setNumber: string) => {
-    setState((previous) => ({ ...previous, selectedSetNumber: setNumber }));
+    setState((previous) => {
+      const reviewedSetNumbers = new Set(previous.reviewedSetNumbers);
+      reviewedSetNumbers.add(setNumber);
+      return { ...previous, selectedSetNumber: setNumber, reviewedSetNumbers };
+    });
   }, []);
 
   const updateComponent = useCallback(
@@ -153,7 +167,9 @@ export function ExtractionProvider({ children }: { children: ReactNode }) {
       if (!state.documentId) return;
       setState((previous) => ({ ...previous, saveState: "saving" }));
       try {
-        await saveFeedback(state.documentId, state.sets, note);
+        await saveFeedback(state.documentId, state.sets, note, [
+          ...state.reviewedSetNumbers,
+        ]);
         setState((previous) => ({ ...previous, saveState: "saved", error: null }));
       } catch (error) {
         setState((previous) => ({
@@ -163,7 +179,7 @@ export function ExtractionProvider({ children }: { children: ReactNode }) {
         }));
       }
     },
-    [state.documentId, state.sets],
+    [state.documentId, state.sets, state.reviewedSetNumbers],
   );
 
   const clear = useCallback(() => setState(INITIAL), []);
@@ -175,6 +191,10 @@ export function ExtractionProvider({ children }: { children: ReactNode }) {
       ...state,
       selectedSet,
       hasEdits: state.editedFields.size > 0,
+      reviewProgress: {
+        reviewed: state.reviewedSetNumbers.size,
+        total: state.sets.length,
+      },
       upload,
       selectSet,
       updateComponent,

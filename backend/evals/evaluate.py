@@ -32,6 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from hardware_sets.pipeline import extract_hardware_sets  # noqa: E402
 
 EVALS = Path(__file__).parent
+ROOT = EVALS.parent
 FIXTURES = EVALS / "fixtures"
 EXPECTED = EVALS / "expected"
 
@@ -290,13 +291,30 @@ def main() -> int:
     args = parser.parse_args()
 
     reports: list[Report] = []
+    skipped: list[str] = []
     for golden_path in sorted(EXPECTED.glob("*.json")):
         golden = json.loads(golden_path.read_text())
-        pdf = FIXTURES / golden["source"]
+        # `source_path` lets a golden reference a real specbook under samples/,
+        # which is not committed. Those are skipped rather than failing the run.
+        pdf = (
+            (ROOT / golden["source_path"]).resolve()
+            if golden.get("source_path")
+            else FIXTURES / golden["source"]
+        )
         if not pdf.exists():
-            print(f"missing fixture {pdf}; run `python evals/generate_fixtures.py` first", file=sys.stderr)
+            if golden.get("source_path"):
+                skipped.append(f"{golden_path.name} (source not present: {golden['source_path']})")
+                continue
+            print(
+                f"missing fixture {pdf}; run `python evals/generate_fixtures.py` first",
+                file=sys.stderr,
+            )
             return 2
         reports.append(evaluate_fixture(pdf, golden))
+
+    if not reports:
+        print("no goldens could be evaluated", file=sys.stderr)
+        return 2
 
     total_correct = sum(r.checks_correct for r in reports)
     total_checks = sum(r.checks_total for r in reports)
@@ -326,6 +344,9 @@ def main() -> int:
 
     for report in reports:
         print_report(report)
+
+    for entry in skipped:
+        print(f"\nskipped {entry}")
 
     print("\n" + "=" * 60)
     print(f"CORPUS OVERALL ACCURACY: {overall:.1%}  ({total_correct}/{total_checks} assertions)")

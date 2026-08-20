@@ -161,3 +161,37 @@ def _set(result, number):
 def _find(result, number, description):
     hardware_set = _set(result, number)
     return next(c for c in hardware_set.components if (c.description or "").startswith(description))
+
+
+# --- Set-identifier-as-column layout -----------------------------------------
+
+
+def test_set_column_layout_is_detected(results):
+    """A schedule with a SET column and no header lines still yields sets."""
+    result = results["fixture_05_set_column"]
+    assert [s.set_number for s in result.hardware_sets] == ["1.1", "1.2", "2.1", "3.1"]
+    assert any("SET column" in w for w in result.warnings)
+
+
+def test_set_column_boundaries_follow_the_identifier(results):
+    """Rows with an empty set cell continue the set above them."""
+    result = results["fixture_05_set_column"]
+    assert [len(s.components) for s in result.hardware_sets] == [1, 3, 3, 2]
+
+
+def test_set_column_set_spans_a_page_break(results):
+    spanning = _set(results["fixture_05_set_column"], "2.1")
+    assert [s.page for s in spanning.location.spans] == [1, 2]
+    assert spanning.components[-1].description == "THRESHOLD"
+
+
+def test_combined_manufacturer_product_column_is_split(results):
+    hinge = _find(results["fixture_05_set_column"], "1.2", "MORTISE HINGE")
+    assert (hinge.mfr, hinge.catalog_number) == ("IVES", "5BB1 4.5")
+
+
+def test_repeated_column_header_is_not_stripped_as_page_furniture(results):
+    """The header repeats on page 2; stripping it lost the SET column entirely."""
+    result = results["fixture_05_set_column"]
+    assert len(result.hardware_sets) == 4
+    assert _set(result, "3.1").location.page == 2

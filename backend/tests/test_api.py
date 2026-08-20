@@ -84,3 +84,29 @@ def test_empty_upload_is_rejected(client):
 def test_malformed_document_id_is_rejected(client):
     assert client.get("/documents/..%2Fetc/pages/1.png").status_code in (400, 404)
     assert client.get("/documents/not-a-uuid").status_code == 400
+
+
+# --- Review tracking, which gates golden export ------------------------------
+
+
+def test_feedback_records_which_sets_were_reviewed(client, uploaded):
+    response = client.post(
+        f"/documents/{uploaded['document_id']}/feedback",
+        json={
+            "hardware_sets": uploaded["result"]["hardware_sets"],
+            "reviewed_set_numbers": ["1", "2"],
+        },
+    )
+    assert response.status_code == 200
+    loaded = client.get(f"/documents/{uploaded['document_id']}/feedback").json()
+    assert loaded["reviewed_set_numbers"] == ["1", "2"]
+
+
+def test_reviewed_set_numbers_default_to_empty(client, uploaded):
+    client.post(
+        f"/documents/{uploaded['document_id']}/feedback",
+        json={"hardware_sets": []},
+    )
+    assert client.get(f"/documents/{uploaded['document_id']}/feedback").json()[
+        "reviewed_set_numbers"
+    ] == []

@@ -25,22 +25,36 @@ def extract_region(
     lines: list[Line],
     legend: dict[str, str] | None = None,
     document_hints: dict[int, Field_] | None = None,
+    header_line: Line | None = None,
+    exclude_span: tuple[float, float] | None = None,
+    geometry_lines: list[Line] | None = None,
 ) -> RegionExtraction:
     min_gap = estimate_min_gap(lines) if lines else 7.0
     rows = classify_rows_for_region(lines, min_gap)
 
-    header_line = next((r.line for r in rows if r.kind is RowKind.COLUMN_HEADER), None)
+    if header_line is None:
+        header_line = next((r.line for r in rows if r.kind is RowKind.COLUMN_HEADER), None)
     data_lines = [r.line for r in rows if r.kind is RowKind.DATA]
 
-    geometry_lines = data_lines + ([header_line] if header_line is not None else [])
-    columns = detect_columns(geometry_lines)
+    # Geometry comes from the data rows alone. A header's own spacing often
+    # differs from the body's - one real schedule prints `QTY. FINISH` close
+    # enough together to bridge two columns that the rows keep well apart.
+    # In a set-column table every set shares one geometry. Measuring it from a
+    # single set's handful of rows gave a different column model per set;
+    # measuring once over the whole table keeps field mapping consistent.
+    model_lines = geometry_lines if geometry_lines else data_lines
+    columns = detect_columns(model_lines) or detect_columns(
+        model_lines + ([header_line] if header_line is not None else [])
+    )
     if columns:
         read_header_labels(header_line, columns)
-        for line in data_lines:
+        for line in model_lines:
             for column, cell in zip(columns, cells_for_line(line, columns)):
                 column.values.append(cell)
         classify_columns(columns, legend=legend, document_hints=document_hints)
         _resolve_mfr_finish_columns(columns)
+        _split_manufacturer_product_column(columns)
+        _exclude_column(columns, exclude_span)
 
     components: list[Component] = []
     description_lines: list[Line] = []
@@ -87,6 +101,49 @@ def classify_rows_for_region(lines: list[Line], min_gap: float) -> list[Classifi
     from .rows import classify_rows
 
     return classify_rows(lines, min_gap)
+
+
+EXCLUDED_LABEL = "__excluded__"
+
+
+def _exclude_column(columns: list[Column], span: tuple[float, float] | None) -> None:
+    """Keep a non-component column (the set identifier) out of field mapping."""
+    if span is None:
+        return
+    low, high = span
+    for column in columns:
+        if column.raw_x0 >= low - 2 and column.raw_x1 <= high + 2:
+            column.field_ = Field_.UNKNOWN
+            column.header_label = EXCLUDED_LABEL
+            column.values = ["" for _ in column.values]
+
+
+MANUFACTURER_PRODUCT_SEPARATOR = " - "
+
+
+def _split_manufacturer_product_column(columns: list[Column]) -> None:
+    """Split a `MANUFACTURER - PRODUCT` column into its two fields.
+
+    Driven by the printed header, not by guessing: only a column whose own
+    heading names both parts is split, and only on the separator the heading
+    itself uses.
+    """
+    for column in columns:
+        # The merged column may have classified as either half of itself.
+        if column.field_ not in (Field_.MFR, Field_.CATALOG_NUMBER):
+            continue
+        label = (column.header_label or "").upper()
+        if not ("MANUFACTURER" in label or "MFR" in label or "MFG" in label):
+            continue
+        if not any(token in label for token in ("PRODUCT", "CATALOG", "MODEL", "ITEM")):
+            continue
+        if sum(1 for v in column.filled if MANUFACTURER_PRODUCT_SEPARATOR in v) < max(
+            1, len(column.filled) // 2
+        ):
+            continue
+        column.field_ = Field_.MFR
+        column.split_target = Field_.CATALOG_NUMBER
+        return
 
 
 def _column_for(columns: list[Column], field_: Field_) -> Column | None:
@@ -187,6 +244,14 @@ def _cell_map(line: Line, columns: list[Column]) -> dict[Field_, str]:
         if not text or column.field_ is Field_.UNKNOWN:
             continue
         target = column.split_target
+        if (
+            target is Field_.CATALOG_NUMBER
+            and MANUFACTURER_PRODUCT_SEPARATOR in text
+        ):
+            manufacturer, _, product = text.partition(MANUFACTURER_PRODUCT_SEPARATOR)
+            values[Field_.MFR] = manufacturer.strip()
+            values[Field_.CATALOG_NUMBER] = product.strip()
+            continue
         if target is not None and len(text.split()) >= 2:
             tokens = text.split()
             if target is Field_.FINISH:

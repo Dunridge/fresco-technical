@@ -1,5 +1,7 @@
 """Column classification decides mfr vs finish from the column, not the value."""
 
+import pytest
+
 from hardware_sets.classification.columns import Column, classify_columns
 from hardware_sets.models import Field_
 
@@ -64,3 +66,25 @@ def test_page_legend_can_point_the_other_way():
     columns = [column(["PC", "PC", "PC"], 0, 0.0)]
     classify_columns(columns, legend={"PC": "PRIME COAT"})
     assert columns[0].field_ is not Field_.MFR
+
+
+@pytest.mark.parametrize(
+    "values",
+    [[], [""], ["", "", ""], ["   ", "\t"]],
+)
+def test_empty_columns_do_not_crash_the_scorers(values):
+    """A column with no content turned up on real specbooks and divided by zero."""
+    columns = [column(values, 0, 0.0)]
+    classify_columns(columns)
+    assert columns[0].field_ is Field_.UNKNOWN
+
+
+def test_mixed_empty_and_filled_columns_classify():
+    columns = [
+        column(["", "", ""], 0, 0.0),
+        column(["3", "1", "1"], 1, 60.0),
+        column(["HINGE", "LOCK", "CLOSER"], 2, 120.0),
+    ]
+    classify_columns(columns)
+    assert columns[1].field_ is Field_.QTY
+    assert columns[2].field_ is Field_.DESCRIPTION

@@ -27,6 +27,27 @@ def line(text: str, x0: float = 72.0) -> Line:
         ("HARDWARE GROUP 3A", "3A", None),
         ("HDW SET 04", "4", None),
         ("HARDWARE SET 12: VESTIBULE", "12", "VESTIBULE"),
+        # Letter-identified sets.
+        ("HARDWARE SET A", "A", None),
+        ("HARDWARE SET AA", "AA", None),
+        ("SET NO. A", "A", None),
+        ("SET B - EXTERIOR DOORS", "B", "EXTERIOR DOORS"),
+        # The abbreviation carries the number, with no SET word.
+        ("HW-1", "1", None),
+        ("HW 1", "1", None),
+        # Two-word prefix.
+        ("DOOR HARDWARE SET 7", "7", None),
+        ("SET 1.1", "1.1", None),
+        # Compound kind word and letter-first identifiers, from a real specbook:
+        # `Hardware Group/Set #A1 - Entry Unit Doors`.
+        ("HARDWARE GROUP/SET #A1", "A1", None),
+        ("HARDWARE GROUP/SET #B2", "B2", None),
+        ("HARDWARE SET/GROUP 12", "12", None),
+        ("HARDWARE SET A1", "A1", None),
+        # One specbook numbers sets as PART n; the PROVIDE guard separates these
+        # from the PART 1/2/3 spec headings that end a region.
+        ("PART 163 - PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:", "163",
+         "PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:"),
     ],
 )
 def test_header_variants(text, number, description):
@@ -43,15 +64,33 @@ def test_header_variants(text, number, description):
         "PROVIDE EACH SINGLE DOOR TO HAVE THE FOLLOWING:",
         "3 EA HINGE TA2714 MK US26D",
         "1 SET SEALS ZE BK",
+        # A letter identifier must end the heading or be followed by a
+        # separator, or ordinary prose reads as a set header.
+        "SET AS FOLLOWS",
+        "SET ALL DOORS TO SWING OUT",
+        "SET SCREWS SHALL BE STAINLESS",
+        "HARDWARE SETS ARE SCHEDULED BELOW",
+        # A bare GROUP is too common in prose to trust without a prefix.
+        "GROUP 12",
     ],
 )
 def test_non_headers_are_rejected(text):
     assert match_set_header(line(text)) is None
 
 
-def test_continuation_header_is_flagged():
-    matched = match_set_header(line("HARDWARE GROUP 4 (CONT'D)"))
-    assert matched == ("4", None, True)
+@pytest.mark.parametrize(
+    "text",
+    [
+        "HARDWARE GROUP 4 (CONT'D)",
+        "HARDWARE GROUP 4 (CONTINUED)",
+        "HARDWARE GROUP 4 (CONT.)",
+        "HARDWARE GROUP 4 CONTD",
+    ],
+)
+def test_continuation_header_is_flagged(text):
+    """`CONTINUED` must be consumed whole - matching only `CONT` used to leave
+    `INUED)` behind as the set's description."""
+    assert match_set_header(line(text)) == ("4", None, True)
 
 
 def test_column_header_line_detection():
@@ -63,3 +102,47 @@ def test_column_header_line_detection():
 def test_legend_extraction_splits_multiple_pairs_on_one_line():
     legend = extract_legend([line("MK = MCKINNEY SCH = SCHLAGE PE = PEMKO")])
     assert legend == {"MK": "MCKINNEY", "SCH": "SCHLAGE", "PE": "PEMKO"}
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["END OF SECTION", "SECTION 087100", "SECTION 23 05 00", "PART 2 - PRODUCTS", "PART 1 - GENERAL"],
+)
+def test_region_terminators(text):
+    from hardware_sets.detection.sets import is_region_end
+
+    assert is_region_end(line(text))
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        # One specbook numbers its sets `PART 163 - PROVIDE EACH ...`; an
+        # unbounded `PART \d+` terminator truncated those sets to nothing.
+        "PART 163 - PROVIDE EACH PR DOOR(S) WITH THE FOLLOWING:",
+        "PART 12 - PROVIDE EACH DOOR WITH THE FOLLOWING:",
+        "1 EA CYLINDER, SEE DIVISION 28 FOR ACCESS CONTROL",
+        "HARDWARE SET NO. 1",
+    ],
+)
+def test_non_terminators(text):
+    from hardware_sets.detection.sets import is_region_end
+
+    assert not is_region_end(line(text))
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        # A real specbook writes `Hardware Group No. 18: (Door ST-1C)`. Stripping
+        # the opening bracket as a separator used to leave `Door ST-1C)`.
+        ("HARDWARE GROUP NO. 18: (Door ST-1C)", "Door ST-1C"),
+        ("HARDWARE GROUP NO. 19: (Doors ST-1A, ST-1B & ST-2)", "Doors ST-1A, ST-1B & ST-2"),
+        ("HARDWARE SET 3 - ENTRANCE DOORS", "ENTRANCE DOORS"),
+        ("HARDWARE SET 4: LOBBY (NORTH)", "LOBBY (NORTH)"),
+    ],
+)
+def test_descriptions_keep_brackets_balanced(text, expected):
+    matched = match_set_header(line(text))
+    assert matched is not None
+    assert matched[1] == expected

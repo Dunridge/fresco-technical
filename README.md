@@ -162,12 +162,12 @@ and finish sharing a column, and set numbers like `3A`.
 ## Accuracy
 
 ```text
-CORPUS OVERALL ACCURACY: 100.0%  (348/348 assertions)
+CORPUS OVERALL ACCURACY: 100.0%  (414/414 assertions)
 no failures
 ```
 
 **Read that number with its caveat.** The challenge specbooks are not
-redistributable, so the evaluation corpus is four PDFs written for this
+redistributable, so the evaluation corpus is five PDFs written for this
 repository to reproduce the layout families and caveats the challenge describes.
 100% means the pipeline handles those structures correctly — it is **not** a
 measurement against the real corpus.
@@ -183,8 +183,57 @@ What makes it more than self-congratulation:
   Each was fixed at the root cause, not special-cased, and fixtures 01–03 did not
   regress.
 
-To measure against real documents, drop them in `backend/samples/` and run the
-CLI; to add them to the corpus, write the expected JSON into `evals/expected/`.
+### Validation against the real challenge corpus
+
+The extractor was run over the 43 PDFs (413 MB, 21 projects) from the challenge's
+Drive folder. That corpus is not in this repository, but the run drove seven
+root-cause fixes that the synthetic fixtures could not have surfaced:
+
+| | Before | After |
+| --- | --- | --- |
+| Files that crashed | 4 | **0** |
+| Files yielding sets | 16 / 43 | **22 / 43** |
+| Hardware sets found | 639 | **1,191** |
+| Components | 10,544 | **13,286** |
+| Null-quantity rate | 48% | **14%** |
+
+The fixes: a divide-by-zero on empty columns; sets running past the end of their
+section (one "set" spanned 455 pages of an unrelated division); a repeated column
+header being stripped as page furniture; header spacing bridging two real
+columns; the union-gap rule erasing a boundary when one long cell overflowed;
+three unrecognised header conventions (`Hardware Group/Set #A1`, `HW-1`,
+`PART 163 - PROVIDE EACH...`); and unbalanced brackets in set descriptions. Each
+is covered by a regression test.
+
+One more was found by reviewing a real document set-by-set in the UI, and is the
+reason that review step exists: a **component row near a page edge was being
+stripped as a running footer**. `4 EA BB HINGE (NRP) BBLK` sat at the bottom of a
+page, and because that row's text repeats at a similar height on other pages the
+frame detector classified it as page furniture and deleted it. Set counts were
+unaffected, nothing was flagged, and no warning was raised - the sets simply had
+fewer components than the page showed. Correcting it recovered **652 components
+across 14 documents**, about 5% of the corpus. Silent deletion is the failure
+mode this project is least able to detect on its own, which is why a human pass
+over a real document is part of the workflow rather than an optional extra.
+
+The falling null-quantity rate is the clearest signal: nearly half of all
+extracted components previously had no quantity, because runaway regions were
+swallowing prose from other divisions and counting it as hardware.
+
+**Set counts are not accuracy.** Field mapping was spot-checked by eye on several
+documents and looks correct, but only the fixture corpus is scored against
+hand-verified ground truth.
+
+To measure against real documents, drop them anywhere under `backend/samples/`
+(nested folders are fine) and run the batch report:
+
+```bash
+python evals/batch_report.py
+```
+
+It walks every PDF, never stops on a bad file, and sorts problems to the top —
+files that yielded no sets, crashed, or have no text layer. To add a document to
+the golden corpus, write its expected JSON into `evals/expected/`.
 
 The metric is defined precisely in `evals/evaluate.py`: the share of individual
 assertions that are correct — 3 per expected set (number, description, start
@@ -192,6 +241,83 @@ page) and 6 per expected component (all fields). A missed set or component score
 zero for all of its assertions, and **a hallucinated one adds the same number of
 failed assertions**, so inventing output is penalised exactly as heavily as
 missing it.
+
+---
+
+## Verifying the extractor against a real document
+
+This is a separate part of the project from the extractor. It lives entirely
+under `backend/evals/`, nothing in `src/hardware_sets/` imports it, and its only
+job is to answer one question: **how accurate is the extraction on a document
+nobody wrote for this repository?**
+
+### Why it needs a human
+
+The evaluator scores extractor output against expected output. If the expected
+output were simply the extractor's own output, it would score 100% by
+construction - the extractor graded against its own answers. That number would
+be meaningless, and it would *look* like validation.
+
+So a golden built this way is only worth anything because a person checked every
+set against the printed page. The tooling exists to make that check fast and to
+record honestly how thoroughly it was done - not to do it for you.
+
+### The workflow
+
+1. Start the API and the UI, and upload a real specbook.
+2. Open **every** hardware set. Each one draws its bounding box on the rendered
+   page beside it, so you are comparing the extraction against the source, not
+   against your memory. Correct any field that is wrong.
+3. Press **Save corrections**. The set list tracks which sets you actually
+   opened (`4 of 37 checked`); only those may become a golden.
+4. Export:
+
+```bash
+python evals/golden_from_review.py --list
+python evals/golden_from_review.py --document-id <id>
+```
+
+5. Score it:
+
+```bash
+python evals/evaluate.py
+```
+
+### What the guard rails do
+
+* **Unreviewed sets are refused.** If you saved after opening 4 of 37 sets, the
+  export fails and tells you so. `--allow-unreviewed` overrides it and records
+  that the override was used.
+* **Corrections are counted server-side**, by diffing your reviewed data against
+  what the extractor originally produced. The count cannot be inflated or
+  suppressed by the client.
+* **Every golden carries its provenance**, so anyone reading the file can see
+  how it was produced:
+
+```json
+"provenance": {
+  "verified_by": "human review in the extraction UI",
+  "reviewed_at": "2026-08-20T14:22:11Z",
+  "source_document": "087100-DOOR-HARDWARE_Rev_2.pdf",
+  "sets_total": 37,
+  "sets_reviewed": 37,
+  "sets_unreviewed": 0,
+  "fields_corrected": 14,
+  "unreviewed_override": false
+}
+```
+
+`fields_corrected: 0` is a legitimate result - but it is visible, so a rubber
+stamp cannot be mistaken for a careful review.
+
+### What it does not do
+
+* It does not verify anything automatically. The person is the instrument.
+* It does not prove the extractor is correct on documents outside the one
+  reviewed.
+* Goldens produced this way reference PDFs under `samples/`, which are not
+  committed. `evaluate.py` skips them with a message when the source is absent,
+  so the suite still runs for anyone cloning the repository.
 
 ---
 
@@ -247,10 +373,12 @@ backend/
 │   ├── llm.py                 # optional refinement (off by default)
 │   ├── cli.py                 # python -m hardware_sets
 │   └── api.py                 # FastAPI app for the UI
-├── tests/                     # 93 tests
+├── tests/                     # 142 tests
 ├── evals/
 │   ├── generate_fixtures.py   # builds the fixture PDFs
 │   ├── parser_comparison.py   # the PyMuPDF vs pdfplumber experiment
+│   ├── batch_report.py        # triage a folder of real specbooks
+│   ├── golden_from_review.py  # human-reviewed extraction -> golden
 │   ├── evaluate.py            # the metric
 │   ├── fixtures/ expected/    # the golden corpus
 └── samples/                   # drop your own PDFs here
@@ -266,7 +394,12 @@ frontend/
 ## Known limitations
 
 * **Scanned pages are not OCR'd.** A page with no text layer is reported in
-  `warnings` rather than processed.
+  `warnings` rather than processed. In the real corpus this affects two
+  documents outright (one 1,546-page manual is ~180 image-only pages) and
+  partially affects several more.
+* **Narrative specs extract weakly.** A schedule written as prose rather than a
+  table ("4 Ea. Hanging and Closing Devices...") yields its sets but maps fields
+  poorly - there is little column geometry to read.
 * **Columns separated by less than ~1.6 character widths merge.** The
   manufacturer/finish case has a dedicated splitter; a description overrunning
   into a catalog column does not.
@@ -352,6 +485,12 @@ python -m hardware_sets path/to/specbook.pdf --out result.json
 
 Other flags: `--compact` (single-line JSON), `--backend pdfplumber` (the
 alternate parser), `--llm` (optional refinement — needs `ANTHROPIC_API_KEY`).
+
+To triage a whole folder of specbooks at once:
+
+```bash
+python evals/batch_report.py
+```
 
 As a library:
 
