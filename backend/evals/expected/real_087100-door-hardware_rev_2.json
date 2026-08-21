@@ -1,0 +1,2334 @@
+{
+  "source": "087100-DOOR-HARDWARE_Rev_2.pdf",
+  "source_path": "samples/Valor Acres Building E/087100-DOOR-HARDWARE_Rev_2.pdf",
+  "notes": "Built from a human review of a real specbook in the review UI. See evals/golden_from_review.py.",
+  "provenance": {
+    "verified_by": "human review in the extraction UI",
+    "reviewed_at": "2026-08-21T00:15:34+00:00",
+    "source_document": "087100-DOOR-HARDWARE_Rev_2.pdf",
+    "sets_total": 37,
+    "sets_reviewed": 37,
+    "sets_unreviewed": 0,
+    "fields_corrected": 0,
+    "unreviewed_override": false,
+    "reviewer_note": null
+  },
+  "hardware_sets": [
+    {
+      "set_number": "1",
+      "description": "Door U1 \u2013 Interior Unit Entry Swing Doors",
+      "not_used": false,
+      "pages": [
+        7
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ENTRY SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DEADBOLT W/ KEYFOB ACCESS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (SMOKE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR VIEWER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "2",
+      "description": "Door U3 \u2013 Exterior Unit Entries & Balconies Swing Doors",
+      "not_used": false,
+      "pages": [
+        7
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ENTRY SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DEADBOLT W/ KEYFOB ACCESS (EXTERIOR DOOR ONLY)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (THERMAL)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR VIEWER (ENTRY DOORS ONLY)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "3",
+      "description": "Doors U5 & U6 \u2013 Bathrooms/ Bedrooms Swing Doors",
+      "not_used": false,
+      "pages": [
+        7,
+        8
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "PB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PRIVACY SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "4",
+      "description": "Doors U7 & U9 \u2013 Closets/ Laundry Swing Doors",
+      "not_used": false,
+      "pages": [
+        8
+      ],
+      "components": [
+        {
+          "qty": 2,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PASSAGE SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "HINGE STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "5",
+      "description": "Doors U11 & U12 - Mechanical Closet Swing Doors",
+      "not_used": false,
+      "pages": [
+        8
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "PB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PASSAGE SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "HINGE STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "6",
+      "description": "Door U2 \u2013 Balcony/Patio Swing Doors",
+      "not_used": false,
+      "pages": [
+        8
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "HINGE BY DR SUPPLIER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ENTRY SET (SCHLAGE LATITUDE LEVER STYLE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE BOLTS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DEADBOLT BY DR SUPPLIER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "7",
+      "description": "Doors U13, U14 & U16 \u2013 Single Barn doors",
+      "not_used": false,
+      "pages": [
+        8
+      ],
+      "components": [
+        {
+          "qty": 1,
+          "description": "BARN DR TRACK",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "PULL (ACCESSIBLE WHERE REQUIRED)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "8",
+      "description": "Doors U15 & U16 \u2013 Double Barn Doors",
+      "not_used": false,
+      "pages": [
+        8,
+        9
+      ],
+      "components": [
+        {
+          "qty": 2,
+          "description": "BARN DR TRACK",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 4,
+          "description": "PULL (ACCESSIBLE WHERE REQUIRED)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "9",
+      "description": "Doors 103A & 111A 114",
+      "not_used": false,
+      "pages": [
+        9
+      ],
+      "components": [
+        {
+          "qty": 1,
+          "description": "BARN DR TRACK",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DEADBOLT LOCK",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "10",
+      "description": "Doors 104A, 105A & 126A 124, 130A & 130B",
+      "not_used": false,
+      "pages": [
+        9
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE) (DR 104A ONLY)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "11",
+      "description": "Doors 108A, 135 & 136",
+      "not_used": false,
+      "pages": [
+        9
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (THERMAL)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "12",
+      "description": "Doors 100A, 100B 123A, 127A, 200A, 200B, 300A, 300B, 400A, 400B",
+      "not_used": false,
+      "pages": [
+        9,
+        10
+      ],
+      "components": [
+        {
+          "qty": 8,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT TRANSFER OR HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CONCEALED VERT ROD ELECT. EXIT DEVICE (DOGGING, NIGHT LATCH FUNCTION)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CONCEALED VERT ROD ELECT. EXIT DEVICE (NIGHT LATCH FUNCTION)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "AUTO OPERATOR (DR 100B ONLY)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ACTUATOR (WALL MOUNT) (DR 100B)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "13",
+      "description": "Door 100B 100A",
+      "not_used": false,
+      "pages": [
+        10
+      ],
+      "components": [
+        {
+          "qty": 8,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CONCEALED VERT ROD ELECT. EXIT DEVICE (DOGGING, NIGHT LATCH DUMMY OR PASSAGE FUNCTION)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "AUTO OPERATOR",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ACTUATOR (WALL MOUNT)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (SOUND)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "14",
+      "description": "Door 124A 128A",
+      "not_used": false,
+      "pages": [
+        10,
+        11
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR BOTTOM (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "15",
+      "description": "Doors 124B 116B, 128B & 137",
+      "not_used": false,
+      "pages": [
+        11
+      ],
+      "components": [
+        {
+          "qty": 7,
+          "description": "BB HINGE (HW)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "AUTO FLUSHBOLTS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DUSTPROOF STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (THERMAL/ FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ASTRAGAL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR BOTTOM (THERMAL/ FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "EA",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "16",
+      "description": "Door 107A & 107B",
+      "not_used": false,
+      "pages": [
+        11
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ENTRY STOREROOM LEVER SET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "17",
+      "description": "Doors 202, 302, 402, 502 & 602",
+      "not_used": false,
+      "pages": [
+        11,
+        12
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PASSAGE LEVER SET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (SMOKE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "18",
+      "description": "Door ST-1C",
+      "not_used": false,
+      "pages": [
+        12
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT EXIT DEVICE W/ NIGHT LATCH FUNCTION & LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER(BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "19",
+      "description": "Doors ST-1A, ST-1B & ST-2",
+      "not_used": false,
+      "pages": [
+        12
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT EXIT DEVICE W/ NIGHT LATCH/ PASSAGE FUNCTION & LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR BOTTOM",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER(BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "20",
+      "description": "Doors ST-3, ST-4, ST-5, ST-6, ST-7, ST-8, ST-9, ST-10, ST-11 & ST",
+      "not_used": false,
+      "pages": [
+        12,
+        13
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "EXIT DEVICE W/ LATCHING/ PASSAGE FUNCTION & LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DOOR BOTTOM",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "21A",
+      "description": "Doors 101A & 102A",
+      "not_used": false,
+      "pages": [
+        13
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "OFFICE STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "21B",
+      "description": "Doors 101A & 102A",
+      "not_used": false,
+      "pages": [
+        13
+      ],
+      "components": [
+        {
+          "qty": 1,
+          "description": "BB HINGE PIVOT (BY DR SUPPLIER)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CONCEALED CLOSER WITH H.O. (BY DR SUPPLIER)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SUPPLIED CENTER LOCK WITH DEADLATCH IN OFFICE FUNCTION",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "22",
+      "description": "Doors 201, 203, 301, 303, 401, 403, 501, 503, 601 & 603",
+      "not_used": false,
+      "pages": [
+        13
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (SMOKE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "23",
+      "description": "Door 109B",
+      "not_used": false,
+      "pages": [
+        14
+      ],
+      "components": [
+        {
+          "qty": 8,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CONCEALED VERT ROD ELECT. EXIT DEVICE (DOGGING, NIGHT LATCH FUNCTION) (PROVIDE HOLES IN EXIT DEVICE FOR DRAINAGE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (SOUND)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "24",
+      "description": "Doors 109A, 112B, 113B & 117A",
+      "not_used": false,
+      "pages": [
+        14
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "EXIT DEVICE (DOGGING, NIGHT LATCH FUNCTION) (PROVIDE HOLES IN EXIT DEVICE FOR DRAINAGE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (THERMAL)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "25",
+      "description": "Doors 122A 201, 203, 401, 403, 601 & 603",
+      "not_used": false,
+      "pages": [
+        14,
+        15
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "EXIT DEVICE (NL FUNCTION W/ LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "26",
+      "description": "Door 125A 122 & 129A",
+      "not_used": false,
+      "pages": [
+        15
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "EXIT DEVICE W/ NIGHT LATCH/ PASSAGE FUNCTION & LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "27",
+      "description": "Doors 122B & 125B 129B, 200A, 200B, 300A, 300B, 400A, 400B",
+      "not_used": false,
+      "pages": [
+        15
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECT EXIT DEVICE W/ NIGHT LATCH/ PASSAGE FUNCTION & LEVER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (FIRE)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "28",
+      "description": "Doors 112, 113, 116A, & 125",
+      "not_used": false,
+      "pages": [
+        15,
+        16
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "B/B DUMMY LEVERS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "29",
+      "description": "Door 114",
+      "not_used": false,
+      "pages": [
+        16
+      ],
+      "components": [
+        {
+          "qty": 1,
+          "description": "DOOR SLIDE TRACK W/ STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "B/B PULLS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "30",
+      "description": "Door 116C",
+      "not_used": false,
+      "pages": [
+        16
+      ],
+      "components": [
+        {
+          "qty": 1,
+          "description": "ALL HARDWARE BY DOOR SUPPLIER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "31",
+      "description": "Doors 118, 119 & 120",
+      "not_used": false,
+      "pages": [
+        16
+      ],
+      "components": [
+        {
+          "qty": 3,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PRIVACY LEVER SET W/ OCCUPANCY INDICATOR",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "WALL STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "32",
+      "description": "Door 123",
+      "not_used": false,
+      "pages": [
+        16
+      ],
+      "components": [
+        {
+          "qty": 8,
+          "description": "BB HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "MANUAL FLUSHBOLTS (INACTIVE DOOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "DUSTPROOF STRIKE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "33",
+      "description": "Doors 109A",
+      "not_used": false,
+      "pages": [
+        16,
+        17
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "BB HINGE (NRP)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER TRANSFER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ELECTRIC STOREROOM LEVER LOCKSET W/ CARD ACCESS (FOR BOTH DIRECTIONS) TO OPEN DOOR",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PULL",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "711",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SURFACE CLOSER W/ OH STOP",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "693",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "SEALS (THERMAL)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "ADA THRESHOLD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "AL",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "34",
+      "description": "Gate 138",
+      "not_used": false,
+      "pages": [
+        17
+      ],
+      "components": [
+        {
+          "qty": 4,
+          "description": "GATE SPRING HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "GATE HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "TRANSFER WIRE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "GATE MOUNTED ELECT EXIT DEVICE WITH MOUNTING PLATE & ADA PULLS",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 2,
+          "description": "ELECT SHEAR LOCK MOUNTED IN GATE HEAD",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "PUSH TO EXIT BUTTON",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "35",
+      "description": "Gates 139 & 140",
+      "not_used": false,
+      "pages": [
+        17,
+        18
+      ],
+      "components": [
+        {
+          "qty": 2,
+          "description": "GATE SPRING HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "TRANSFER WIRE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "GATE MOUNTED ELECT EXIT DEVICE WITH MOUNTING PLATE, LEVER AND STRIKE PLATE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CYLINDER",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    },
+    {
+      "set_number": "36",
+      "description": "Gates U19",
+      "not_used": false,
+      "pages": [
+        18
+      ],
+      "components": [
+        {
+          "qty": 2,
+          "description": "GATE SPRING HINGE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BBLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "TRANSFER WIRE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "GATE MOUNTED ELECT STOREROOM LEVER LOCKSET",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "BLK",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CORE",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "622",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "POWER SUPPLY",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": "GRY",
+          "notes": null
+        },
+        {
+          "qty": 1,
+          "description": "CARD READER (BY OWNER\u2019S SECURITY CONTRACTOR)",
+          "catalog_number": null,
+          "mfr": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    }
+  ]
+}
