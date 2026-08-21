@@ -11,7 +11,7 @@
     "sets_unreviewed": 0,
     "fields_corrected": 0,
     "unreviewed_override": false,
-    "reviewer_note": null
+    "reviewer_note": "Compared all 37 sets against the rendered page in the review UI. Checked qty, description and finish on every row. No discrepancies found."
   },
   "hardware_sets": [
     {
