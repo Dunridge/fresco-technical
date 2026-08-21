@@ -1,10 +1,10 @@
 {
   "source": "087100-DOOR-HARDWARE_Rev_2.pdf",
   "source_path": "samples/Valor Acres Building E/087100-DOOR-HARDWARE_Rev_2.pdf",
-  "notes": "Hand-verified against the printed pages in the review UI: 37 hardware sets, 242 components, from a real 18-page Division 08 specbook.",
+  "notes": "Built from a human review of a real specbook in the review UI. See evals/golden_from_review.py.",
   "provenance": {
     "verified_by": "human review in the extraction UI",
-    "reviewed_at": "2026-08-20T23:12:37+00:00",
+    "reviewed_at": "2026-08-21T00:15:34+00:00",
     "source_document": "087100-DOOR-HARDWARE_Rev_2.pdf",
     "sets_total": 37,
     "sets_reviewed": 37,
